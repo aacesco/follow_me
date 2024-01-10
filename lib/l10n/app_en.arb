@@ -1,0 +1,33 @@
+{
+  "@@locale" : "en",
+
+  "article": "Details",
+
+  "helloWorld": "Hello World!",
+  "@helloWorld": {
+    "description": "The conventional newborn programmer greeting"
+  },
+  "title": "Title",
+  "description": "Description",
+  "notes": "Notes",
+  "image": "Image",
+  "category": "Category",
+  "location": "Location",
+  "dates": "Dates",
+  "recurring": "Recurring",
+  "audience": "Audience",
+  "type": "Type",
+  "contacts": "Contacts",
+  "promoter": "Promoter",
+  "guide": "Guide",
+  "website": "Website",
+  "attachments": "Attachments",
+  "likes": "Likes",
+  "spiritualEvents": "Spiritual events",
+  "culturalEvents": "Culture",
+  "leisureEvents": "Leisure",
+  "promoters": "Promoter",
+  "info": "Info",
+  "favorite": "Favorite",
+  "all": "All"
+}
