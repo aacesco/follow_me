@@ -54,7 +54,7 @@ class _SpiritualEventsListState extends State<SpiritualEventsList> {
                         itemCount: events.length,
                         itemBuilder: (_, index) {
                           Event currentEvent = events[index];
-                          return FmTile(currentEvent);
+                          return FmTile( event: currentEvent,);
                         },
                       );
                     }
