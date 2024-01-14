@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-
+import '../constants/app_constants.dart';
 import '../constants/fields_constants.dart';
 
 class Event{
 
   String? id;
-  String? image; //url
+  late String image; //url
   late String title;
   late String description;
   late String category;
@@ -28,6 +28,7 @@ class Event{
   late String updateTime;
 
   Event(
+      this.image,
       this.title,
       this.description,
       this.category,
@@ -36,45 +37,37 @@ class Event{
       this.insertUser,
       this.insertTime,
       this.updateUser,
-      this.updateTime);
+      this.updateTime
+      );
 
-   Event.fromQuery(DocumentSnapshot map){
-    id = map.id;
-    title = map[FieldsConstants.TITLE];
-    description = map[FieldsConstants.DESCRIPTION];
-    category = map[FieldsConstants.CATEGORY];
-    notes = map[FieldsConstants.NOTES];
-    location = map[FieldsConstants.LOCATION];
-    image = map[FieldsConstants.IMAGE];
-    //dates = map[FieldsConstants.DATES];
-    insertUser = map[FieldsConstants.INSERT_USER];
-    //insertTime = map[FieldsConstants.INSERT_TIME];
-    updateUser = map[FieldsConstants.UPDATE_USER];
-    //updateTime = map[FieldsConstants.UPDATE_TIME];
-  }
+  Event.fromQuery(DocumentSnapshot document){
+    Map<String,dynamic> map = (document.data() as Map<String,dynamic>);
 
-  Event.fromMap(Map<String, dynamic> map){
-    id = map[FieldsConstants.ID];
-    title = map[FieldsConstants.TITLE];
-    description = map[FieldsConstants.DESCRIPTION];
-    category = map[FieldsConstants.CATEGORY];
+    id = document.id;
+    image = document[FieldsConstants.IMAGE];
+    title = document[FieldsConstants.TITLE];
+    description = document[FieldsConstants.DESCRIPTION];
+    category = document[FieldsConstants.CATEGORY];
+    notes = map.containsKey(FieldsConstants.NOTES) ? document[FieldsConstants.NOTES] : AppConstants.EMPTY;
+    location = document[FieldsConstants.LOCATION];
     //dates = map[FieldsConstants.DATES];
-    insertUser = map[FieldsConstants.INSERT_USER];
-    //insertTime = map[FieldsConstants.INSERT_TIME];
-    updateUser = map[FieldsConstants.UPDATE_USER];
-    //updateTime = map[FieldsConstants.UPDATE_TIME];
+    insertUser = document[FieldsConstants.INSERT_USER] ?? AppConstants.EMPTY;
+    insertTime = document[FieldsConstants.INSERT_TIME].toString();
+    updateUser = document[FieldsConstants.UPDATE_USER] ?? AppConstants.EMPTY;
+    updateTime = document[FieldsConstants.UPDATE_TIME].toString();
   }
 
   Map<String, dynamic> toMap(){
     return {
-      FieldsConstants.ID : id,
+      FieldsConstants.IMAGE : image,
       FieldsConstants.TITLE : title,
       FieldsConstants.DESCRIPTION : description,
-      FieldsConstants.CATEGORY : notes,
+      FieldsConstants.CATEGORY : category,
+      FieldsConstants.LOCATION : location,
+      FieldsConstants.NOTES : notes,
       //FieldsConstants.DATES : dates,
       FieldsConstants.INSERT_TIME : insertTime,
       FieldsConstants.INSERT_USER : insertUser,
-      FieldsConstants.LOCATION : location,
       FieldsConstants.UPDATE_TIME : updateTime,
       FieldsConstants.UPDATE_USER: updateUser,
     };

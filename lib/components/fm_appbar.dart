@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
 import '../models/event.dart';
-import '../pages/article.dart';
+import '../pages/event_page.dart';
 import '../pages/spiritual_events_list.dart';
+
 
 class FmAppBar extends StatefulWidget implements PreferredSizeWidget {
   const FmAppBar({Key? key}) : preferredSize = const Size.fromHeight(kToolbarHeight * 2);
@@ -16,6 +16,7 @@ class FmAppBar extends StatefulWidget implements PreferredSizeWidget {
 }
 
 class _FmAppBarState extends State<FmAppBar> {
+
   @override
   Widget build(BuildContext context) {
 
@@ -36,7 +37,7 @@ class _FmAppBarState extends State<FmAppBar> {
               final parent = context.findAncestorWidgetOfExactType<SpiritualEventsList>();
 
               Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => ArticlePage(Event(parent.toString(), '', '', '',
+                  MaterialPageRoute(builder: (context) => EventPage(Event('', '', '', '', '',
                       '', DateTime.now().toString(), '', DateTime.now().toString()), true)));
             },
           ),

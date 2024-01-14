@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import '../articles_db.dart';
 import '../constants/app_constants.dart';
 import '../models/event.dart';
-import '../pages/spiritual_events_list.dart';
+import '../data/events_db.dart';
+import 'package:get/get.dart';
 
-class ArticlePage extends StatefulWidget {
-  final Event article;
+class EventPage extends StatefulWidget {
+  final Event event;
   final bool isNew;
 
-  const ArticlePage(this.article, this.isNew, {super.key});
+  const EventPage(this.event, this.isNew, {super.key});
 
   @override
-  State<ArticlePage> createState() => _ArticlePageState();
+  State<EventPage> createState() => _EventPageState();
 }
 
-class _ArticlePageState extends State<ArticlePage> {
+class _EventPageState extends State<EventPage> {
   final TextEditingController imageCtlr = TextEditingController();
   final TextEditingController titleCtlr = TextEditingController();
   final TextEditingController descriptionCtlr = TextEditingController();
@@ -34,22 +34,23 @@ class _ArticlePageState extends State<ArticlePage> {
 
   @override
   void initState() {
-   if(!widget.isNew){
-     imageCtlr.text = widget.article.image ?? AppConstants.EMPTY;
-     titleCtlr.text = widget.article.title;
-     descriptionCtlr.text = widget.article.description;
-     categoryCtlr.text = widget.article.category;
-    // datesCtlr.text = widget.article.dates[0].toString();
-     recurringCtlr.text = widget.article.recurring.toString();
-     notesCtlr.text = widget.article.notes ?? AppConstants.EMPTY;
-     audienceCtlr.text = widget.article.audience ?? AppConstants.EMPTY;
-     typeCtlr.text = widget.article.type ?? AppConstants.GENERIC;
-     guideCtlr.text = widget.article.guide ?? AppConstants.EMPTY;
-     contactsCtlr.text = widget.article.contacts ?? AppConstants.EMPTY;
-     promoterCtlr.text = widget.article.promoter ?? AppConstants.EMPTY;
-     websiteCtlr.text = widget.article.link ?? AppConstants.EMPTY;
-     attachmentsCtlr.text = widget.article.attachments ?? AppConstants.EMPTY;
-   }
+    if(!widget.isNew){
+      imageCtlr.text = widget.event.image;
+      titleCtlr.text = widget.event.title;
+      descriptionCtlr.text = widget.event.description;
+      categoryCtlr.text = widget.event.category;
+      locationCtlr.text = widget.event.location;
+      // datesCtlr.text = widget.article.dates[0].toString();
+      recurringCtlr.text = widget.event.recurring.toString();
+      notesCtlr.text = widget.event.notes ?? AppConstants.EMPTY;
+      audienceCtlr.text = widget.event.audience ?? AppConstants.EMPTY;
+      typeCtlr.text = widget.event.type ?? AppConstants.GENERIC;
+      guideCtlr.text = widget.event.guide ?? AppConstants.EMPTY;
+      contactsCtlr.text = widget.event.contacts ?? AppConstants.EMPTY;
+      promoterCtlr.text = widget.event.promoter ?? AppConstants.EMPTY;
+      websiteCtlr.text = widget.event.link ?? AppConstants.EMPTY;
+      attachmentsCtlr.text = widget.event.attachments ?? AppConstants.EMPTY;
+    }
 
     super.initState();
   }
@@ -60,12 +61,13 @@ class _ArticlePageState extends State<ArticlePage> {
     return Scaffold(
       appBar: AppBar(title: Text(AppLocalizations.of(context)!.article)),
       floatingActionButton: FloatingActionButton(
-        onPressed: saveArticle,
+        onPressed: saveEvent,
         child: const Icon(Icons.save),
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
+            InputText(imageCtlr, AppLocalizations.of(context)!.image),
             InputText(titleCtlr, AppLocalizations.of(context)!.title),
             InputText(descriptionCtlr, AppLocalizations.of(context)!.description),
             InputText(categoryCtlr, AppLocalizations.of(context)!.category),
@@ -77,27 +79,31 @@ class _ArticlePageState extends State<ArticlePage> {
     );
   }
 
-  Future saveArticle() async {
-    ArticleDb db = ArticleDb();
-    widget.article.title = titleCtlr.text;
-    widget.article.description = descriptionCtlr.text;
-    widget.article.category = categoryCtlr.text;
-    widget.article.location = locationCtlr.text;
-    widget.article.notes = notesCtlr.text;
+  Future saveEvent() async {
+    final eventsRepo = Get.put(EventsRepo());
 
+    widget.event.image = imageCtlr.text;
+    widget.event.title = titleCtlr.text;
+    widget.event.description = descriptionCtlr.text;
+    widget.event.category = categoryCtlr.text;
+    widget.event.location = locationCtlr.text;
+    widget.event.notes = notesCtlr.text;
+    widget.event.insertTime = DateTime.now().toString();
+    widget.event.insertUser = 'Andrea';
+    widget.event.updateTime = DateTime.now().toString();
+    widget.event.updateUser = 'Andrea';
 
     String id;
     if(widget.isNew){
-      id = await db.insertArticle(widget.article);
+      id = await eventsRepo.AddSpiritualEvent(widget.event);
     } else {
-      id = widget.article.id ?? 'fre';
-      await db.updateArticle(widget.article);
+      id = await eventsRepo.UpdateSpiritualEvent(widget.event);
     }
 
-    Event currentArticle = await db.getArticleById(id);
+    Event currentEvent = await eventsRepo.GetSpiritualEventById(id);
 
     Navigator.push(context,
-        MaterialPageRoute(builder: (context) =>  ArticlePage(currentArticle, false)));
+        MaterialPageRoute(builder: (context) =>  EventPage(currentEvent, false)));
   }
 }
 

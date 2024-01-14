@@ -30,9 +30,10 @@ class _FmTileState extends State<FmTile> {
                       children: [
                         ClipRRect(
                           borderRadius: BorderRadius.circular(8.0),
-                          child: Image.network(
-                            widget.event.image ?? '',
-                            fit: BoxFit.cover,
+                          child: FadeInImage.assetNetwork(
+                              placeholder: 'images/image_placeholder.gif',
+                              image: widget.event.image,
+                              fit: BoxFit.cover
                           ),
                         ),
                         Padding(
@@ -53,7 +54,7 @@ class _FmTileState extends State<FmTile> {
                                       children: [
                                         IconButton(
                                             icon: isFavorite ?
-                                                const Icon(Icons.favorite) : const Icon(
+                                            const Icon(Icons.favorite) : const Icon(
                                                 Icons.favorite_border),
                                             color: Colors.white,
                                             onPressed: () {
