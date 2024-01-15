@@ -72,7 +72,9 @@ flutter:
   generate: true
 
   assets:
-    - lib/assets/
+    - assets/
+    - assets/images/image_not_found.png
+    - assets/images/loading_image.gif
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

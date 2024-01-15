@@ -5,7 +5,6 @@ import '../models/event.dart';
 import '../constants/fields_constants.dart';
 
 class EventsRepo extends GetxController{
-  static EventsRepo get instance => Get.find();
   //final _db = FirebaseFirestore.instance;
   CollectionReference spiritualEvents = FirebaseFirestore.instance.collection(AppConstants.SPIRITUAL_EVENTS);
 

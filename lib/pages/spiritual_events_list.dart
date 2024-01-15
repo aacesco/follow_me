@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:follow_me/data/events_db.dart';
+import 'package:follow_me/data/events_repo.dart';
 import 'package:follow_me/models/event.dart';
-import 'package:follow_me/pages/event_page.dart';
+import 'package:follow_me/pages/edit_event_page.dart';
 import 'package:get/get.dart';
 import '../components/fm_appbar.dart';
 import '../components/fm_tile.dart';
@@ -43,6 +43,7 @@ class _SpiritualEventsListState extends State<SpiritualEventsList> {
               FutureBuilder(
                 future: eventsRepo.GetSpiritualEvents(),
                 builder: (context, snapshot) {
+                  //TODO migliorare error handling
                   if (snapshot.hasError) {
                     return const Text("Something went wrong");
                   }
@@ -81,7 +82,7 @@ class _SpiritualEventsListState extends State<SpiritualEventsList> {
               final List<String> dates = [DateTime.now().toString()];
 
               Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => EventPage(Event('', '', '', '', '',
+                  MaterialPageRoute(builder: (context) => EditEventPage(Event('', '', '', '', '',
                       '', DateTime.now().toString(), '', DateTime.now().toString()), true)));
             },
             child: const Icon(Icons.add),

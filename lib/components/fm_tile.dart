@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/event.dart';
+import '../pages/event_page.dart';
+import 'cover_image.dart';
 
 class FmTile extends StatefulWidget {
   final Event event;
@@ -30,11 +32,7 @@ class _FmTileState extends State<FmTile> {
                       children: [
                         ClipRRect(
                           borderRadius: BorderRadius.circular(8.0),
-                          child: FadeInImage.assetNetwork(
-                              placeholder: 'images/image_placeholder.gif',
-                              image: widget.event.image,
-                              fit: BoxFit.cover
-                          ),
+                          child: CoverImage(event: widget.event),
                         ),
                         Padding(
                             padding: const EdgeInsets.all(2),
@@ -99,7 +97,7 @@ class _FmTileState extends State<FmTile> {
   }
 
   onTap() {
-    const snackBar = SnackBar(content: Text('Tap'));
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) =>  EventPage(widget.event)));
   }
 }
