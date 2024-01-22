@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../models/event.dart';
 import '../pages/event_page.dart';
 import 'cover_image.dart';
@@ -97,7 +98,6 @@ class _FmTileState extends State<FmTile> {
   }
 
   onTap() {
-    Navigator.push(context,
-        MaterialPageRoute(builder: (context) =>  EventPage(widget.event)));
+    Get.to( EventPage(widget.event), arguments: widget.event);
   }
 }

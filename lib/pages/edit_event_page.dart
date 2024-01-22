@@ -5,8 +5,6 @@ import '../models/event.dart';
 import '../data/events_repo.dart';
 import 'package:get/get.dart';
 
-import 'event_page.dart';
-
 class EditEventPage extends StatefulWidget {
   final Event event;
   final bool isNew;
@@ -61,7 +59,7 @@ class _EditEventPageState extends State<EditEventPage> {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      appBar: AppBar(title: Text(AppLocalizations.of(context)!.article)),
+      appBar: AppBar(title: Text(AppLocalizations.of(context)!.details)),
       floatingActionButton: FloatingActionButton(
         onPressed: saveEvent,
         child: const Icon(Icons.save),
@@ -103,9 +101,7 @@ class _EditEventPageState extends State<EditEventPage> {
     }
 
     Event currentEvent = await eventsRepo.GetSpiritualEventById(id);
-
-    Navigator.push(context,
-        MaterialPageRoute(builder: (context) =>  EventPage(currentEvent)));
+    Get.toNamed("/event_page", arguments: currentEvent);
   }
 }
 

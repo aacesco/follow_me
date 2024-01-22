@@ -80,10 +80,8 @@ class _SpiritualEventsListState extends State<SpiritualEventsList> {
           floatingActionButton: FloatingActionButton(
             onPressed: (){
               final List<String> dates = [DateTime.now().toString()];
-
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => EditEventPage(Event('', '', '', '', '',
-                      '', DateTime.now().toString(), '', DateTime.now().toString()), true)));
+              Get.toNamed("/edit_event_page", arguments: {'event': Event('', '', '', '', '',
+                  '', DateTime.now().toString(), '', DateTime.now().toString()), 'isNew': true});
             },
             child: const Icon(Icons.add),
           ),

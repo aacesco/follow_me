@@ -1,7 +1,7 @@
 {
   "@@locale" : "en",
 
-  "article": "Details",
+  "details": "Details",
 
   "helloWorld": "Hello World!",
   "@helloWorld": {

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:follow_me/pages/spiritual_events_list.dart';
+import 'package:get/get.dart';
 import '../components/cover_image.dart';
 import '../constants/app_constants.dart';
 import '../models/event.dart';
-import 'edit_event_page.dart';
 
 class EventPage extends StatefulWidget {
   final Event event;
@@ -38,7 +39,11 @@ class _EventPageState extends State<EventPage> {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      appBar: AppBar(title: Text(AppLocalizations.of(context)!.article)),
+      appBar: AppBar(title: Text(AppLocalizations.of(context)!.details),
+        leading: IconButton(
+            onPressed: () => Get.to(const SpiritualEventsList()),
+            icon: const Icon(Icons.arrow_back)),
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: editEvent,
         child: const Icon(Icons.edit),
@@ -63,7 +68,6 @@ class _EventPageState extends State<EventPage> {
   }
 
   Future editEvent() async {
-    Navigator.push(context,
-        MaterialPageRoute(builder: (context) =>  EditEventPage(widget.event, false)));
+    Get.toNamed("/edit_event_page", arguments: {'event': widget.event, 'isNew': false});
   }
 }
