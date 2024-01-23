@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:follow_me/data/events_repo.dart';
 import 'package:follow_me/models/event.dart';
-import 'package:follow_me/pages/edit_event_page.dart';
 import 'package:get/get.dart';
 import '../components/fm_appbar.dart';
 import '../components/fm_tile.dart';
@@ -79,9 +77,8 @@ class _SpiritualEventsListState extends State<SpiritualEventsList> {
           ),
           floatingActionButton: FloatingActionButton(
             onPressed: (){
-              final List<String> dates = [DateTime.now().toString()];
               Get.toNamed("/edit_event_page", arguments: {'event': Event('', '', '', '', '',
-                  '', DateTime.now().toString(), '', DateTime.now().toString()), 'isNew': true});
+                  '', DateTime.now(), '', DateTime.now()), 'isNew': true});
             },
             child: const Icon(Icons.add),
           ),

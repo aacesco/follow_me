@@ -1,16 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../constants/app_constants.dart';
 import '../constants/fields_constants.dart';
+import 'markers.dart';
 
-class Event{
+class Event extends Markers{
 
   String? id;
-  late String image; //url
+  late String image;
   late String title;
   late String description;
   late String category;
   late String location;
-  List<String>? dates; //discuss later
+  double? latitude;
+  double? longitude; // usare geopoint//position /chiedere posizione dell'utente
   bool? recurring; //frequency, every week, every month..
   String? notes;
   String? audience;
@@ -19,13 +21,12 @@ class Event{
   String? promoter;
   String? guide;
   String? link;
-  String? attachments;
-  int? likes;
+  int? likes;//parteciperò/ interessato
+  List<String>? tags;
 
-  late String insertUser;
-  late String insertTime;
-  late String updateUser;
-  late String updateTime;
+  List<String>? favorite; //metterlo nell'anagrafica dell'utente (tab a parte), lista di ID
+  String? attachments; //cloud storage, limite dimensione massima, entità esterna,
+  // creare cartella con id evento o ID come prefisso del file
 
   Event(
       this.image,
@@ -33,14 +34,18 @@ class Event{
       this.description,
       this.category,
       this.location,
-      //this.dates,
-      this.insertUser,
-      this.insertTime,
-      this.updateUser,
-      this.updateTime
+      super.insertUser,
+      super.insertTime,
+      super.updateUser,
+      super.updateTime
       );
 
-  Event.fromQuery(DocumentSnapshot document){
+  Event.fromQuery(DocumentSnapshot document) : super(
+    document[FieldsConstants.INSERT_USER] ?? AppConstants.EMPTY,
+    (document[FieldsConstants.INSERT_TIME] as Timestamp).toDate(),
+    document[FieldsConstants.UPDATE_USER] ?? AppConstants.EMPTY,
+    (document[FieldsConstants.UPDATE_TIME] as Timestamp).toDate(),
+  ){
     Map<String,dynamic> map = (document.data() as Map<String,dynamic>);
 
     id = document.id;
@@ -50,11 +55,6 @@ class Event{
     category = document[FieldsConstants.CATEGORY];
     notes = map.containsKey(FieldsConstants.NOTES) ? document[FieldsConstants.NOTES] : AppConstants.EMPTY;
     location = document[FieldsConstants.LOCATION];
-    //dates = map[FieldsConstants.DATES];
-    insertUser = document[FieldsConstants.INSERT_USER] ?? AppConstants.EMPTY;
-    insertTime = document[FieldsConstants.INSERT_TIME].toString();
-    updateUser = document[FieldsConstants.UPDATE_USER] ?? AppConstants.EMPTY;
-    updateTime = document[FieldsConstants.UPDATE_TIME].toString();
   }
 
   Map<String, dynamic> toMap(){
@@ -65,7 +65,6 @@ class Event{
       FieldsConstants.CATEGORY : category,
       FieldsConstants.LOCATION : location,
       FieldsConstants.NOTES : notes,
-      //FieldsConstants.DATES : dates,
       FieldsConstants.INSERT_TIME : insertTime,
       FieldsConstants.INSERT_USER : insertUser,
       FieldsConstants.UPDATE_TIME : updateTime,

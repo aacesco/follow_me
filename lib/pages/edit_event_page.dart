@@ -88,9 +88,9 @@ class _EditEventPageState extends State<EditEventPage> {
     widget.event.category = categoryCtlr.text;
     widget.event.location = locationCtlr.text;
     widget.event.notes = notesCtlr.text;
-    widget.event.insertTime = widget.isNew ? DateTime.now().toString() : widget.event.insertTime;
+    widget.event.insertTime = widget.isNew ? DateTime.now() : widget.event.insertTime;
     widget.event.insertUser = widget.isNew ? 'Andrea' : widget.event.insertUser;
-    widget.event.updateTime = DateTime.now().toString();
+    widget.event.updateTime = DateTime.now();
     widget.event.updateUser = 'Andrea';
 
     String id;

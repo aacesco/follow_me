@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:get/get.dart';
 import '../models/event.dart';
-import '../pages/edit_event_page.dart';
 import '../pages/spiritual_events_list.dart';
 
 
@@ -36,9 +36,8 @@ class _FmAppBarState extends State<FmAppBar> {
             onPressed: (){
               final parent = context.findAncestorWidgetOfExactType<SpiritualEventsList>();
 
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => EditEventPage(Event('', '', '', '', '',
-                      '', DateTime.now().toString(), '', DateTime.now().toString()), true)));
+              Get.toNamed("/edit_event_page", arguments: {'event': Event('', '', '', '', '',
+                  '', DateTime.now(), '', DateTime.now()), 'isNew': true});
             },
           ),
           IconButton(

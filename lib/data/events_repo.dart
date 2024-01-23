@@ -5,11 +5,9 @@ import '../models/event.dart';
 import '../constants/fields_constants.dart';
 
 class EventsRepo extends GetxController{
-  //final _db = FirebaseFirestore.instance;
   CollectionReference spiritualEvents = FirebaseFirestore.instance.collection(AppConstants.SPIRITUAL_EVENTS);
 
   Future AddSpiritualEvent(Event event) async {
-   // CollectionReference spiritualEvents = _db.collection(AppConstants.SPIRITUAL_EVENTS);
     DocumentReference res = await spiritualEvents.add(event.toMap());
     return res.id;
   }
@@ -25,7 +23,6 @@ class EventsRepo extends GetxController{
   }
 
   Future<List<Event>> SearchSpiritualEvents(String searchKey) async {
-   // CollectionReference spiritualEvents = _db.collection(AppConstants.SPIRITUAL_EVENTS);
     QuerySnapshot results = await spiritualEvents
         .where(FieldsConstants.TITLE, isGreaterThanOrEqualTo: searchKey)
         .where(FieldsConstants.TITLE, isLessThan: '${searchKey}z')
