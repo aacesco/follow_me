@@ -1,32 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:follow_me/data/events_repo.dart';
+import 'package:follow_me/data/events_controller.dart';
 import 'package:follow_me/models/event.dart';
 import 'package:get/get.dart';
 import '../components/fm_appbar.dart';
 import '../components/fm_tile.dart';
-import '../global_bindings.dart';
 
-
-class SpiritualEventsList extends StatefulWidget {
+class SpiritualEventsList extends StatelessWidget {
   const SpiritualEventsList({super.key});
 
   @override
-  State<SpiritualEventsList> createState() => _SpiritualEventsListState();
-}
-
-class _SpiritualEventsListState extends State<SpiritualEventsList> {
-
-  @override
-  void initState() {
-    super.initState();
-    GlobalBindings().dependencies();
-    final eventsRepo = Get.put(EventsRepo());
-    eventsRepo.GetSpiritualEvents();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    final eventsRepo = Get.put(EventsRepo());
+    final eventsRepo = Get.put(EventsController());
+    eventsRepo.GetEvents();
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
     final Color oddItemColor = colorScheme.primary.withOpacity(0.05);
     final Color evenItemColor = colorScheme.primary.withOpacity(0.15);
@@ -38,31 +23,13 @@ class _SpiritualEventsListState extends State<SpiritualEventsList> {
           appBar: const FmAppBar( ),
           body: TabBarView(
             children: <Widget>[
-              FutureBuilder(
-                future: eventsRepo.GetSpiritualEvents(),
-                builder: (context, snapshot) {
-                  //TODO migliorare error handling
-                  if (snapshot.hasError) {
-                    return const Text("Something went wrong");
-                  }
-
-                  if (snapshot.connectionState == ConnectionState.done) {
-                    if (snapshot.hasData ) {
-                      List<Event> events = snapshot.data ?? [];
-                      return ListView.builder(
-                        itemCount: events.length,
-                        itemBuilder: (_, index) {
-                          Event currentEvent = events[index];
-                          return FmTile( event: currentEvent,);
-                        },
-                      );
-                    }
-                  } else{
-                    return const Text("No connection..");
-                  }
-
-                  return const Text("loading..");
-                },
+              Obx(
+                    () => ListView.builder(
+                    itemCount: eventsRepo.events.length,
+                    itemBuilder: (context, index) {
+                      Event currentEvent = eventsRepo.events[index];
+                      return FmTile( event: currentEvent,);
+                    }),
               ),
               ListView.builder(
                 itemCount: 25,
@@ -85,5 +52,4 @@ class _SpiritualEventsListState extends State<SpiritualEventsList> {
         )
     );
   }
-
 }

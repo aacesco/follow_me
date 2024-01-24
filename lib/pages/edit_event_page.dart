@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../constants/app_constants.dart';
 import '../models/event.dart';
-import '../data/events_repo.dart';
+import '../data/events_controller.dart';
 import 'package:get/get.dart';
 
 class EditEventPage extends StatefulWidget {
@@ -80,7 +80,7 @@ class _EditEventPageState extends State<EditEventPage> {
   }
 
   Future saveEvent() async {
-    final eventsRepo = Get.put(EventsRepo());
+    final eventsRepo = Get.put(EventsController());
 
     widget.event.image = imageCtlr.text;
     widget.event.title = titleCtlr.text;
@@ -95,12 +95,15 @@ class _EditEventPageState extends State<EditEventPage> {
 
     String id;
     if(widget.isNew){
-      id = await eventsRepo.AddSpiritualEvent(widget.event);
+      eventsRepo.AddEvent(widget.event);
     } else {
-      id = await eventsRepo.UpdateSpiritualEvent(widget.event);
+      eventsRepo.UpdateEvent(widget.event);
     }
 
-    Event currentEvent = await eventsRepo.GetSpiritualEventById(id);
+    id = eventsRepo.eventId.value;
+    eventsRepo.GetEventById(id);
+
+    Event currentEvent = eventsRepo.events[0];
     Get.toNamed("/event_page", arguments: currentEvent);
   }
 }
