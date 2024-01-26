@@ -1,39 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:follow_me/constants/navigation_constants.dart';
 import 'package:follow_me/pages/spiritual_events_list.dart';
 import 'package:get/get.dart';
 import '../components/cover_image.dart';
+import '../components/paragraph.dart';
 import '../constants/app_constants.dart';
 import '../models/event.dart';
 
-class EventPage extends StatefulWidget {
+class EventPage extends StatelessWidget {
   final Event event;
 
   const EventPage(this.event, {super.key});
-
-  @override
-  State<EventPage> createState() => _EventPageState();
-}
-
-class _EventPageState extends State<EventPage> {
-
-  late CoverImage image;
-  late Title title;
-  late Text description;
-  late Text location;
-  late Text category;
-  late Text notes;
-
-  @override
-  void initState() {
-    image = CoverImage(event: widget.event);
-    title = Title(color: Colors.black, child: Text(widget.event.title));
-    description = Text(widget.event.description);
-    location = Text(widget.event.location);
-    notes =  Text(widget.event.notes ?? AppConstants.EMPTY);
-    category = Text(widget.event.category);
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,8 +19,11 @@ class _EventPageState extends State<EventPage> {
     return Scaffold(
       appBar: AppBar(title: Text(AppLocalizations.of(context)!.details),
         leading: IconButton(
-            onPressed: () => Get.to(const SpiritualEventsList()),
-            icon: const Icon(Icons.arrow_back)),
+            onPressed: () {
+              Get.to(SpiritualEventsList());
+            },
+            icon: const Icon(Icons.arrow_back)
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: editEvent,
@@ -50,17 +31,22 @@ class _EventPageState extends State<EventPage> {
       ),
       body: SingleChildScrollView(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            image,
-            title,
-            Title(color: Colors.black, child: Text(AppLocalizations.of(context)!.description)),
-            description,
-            Title(color: Colors.black, child: Text(AppLocalizations.of(context)!.location)),
-            location,
-            Title(color: Colors.black, child: Text(AppLocalizations.of(context)!.category)),
-            category,
-            Title(color: Colors.black, child: Text(AppLocalizations.of(context)!.notes)),
-            notes
+            CoverImage(event: event),
+            Padding(
+                padding: const EdgeInsets.all(8),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Paragraph(event.title, ''),
+                      Paragraph(AppLocalizations.of(context)!.description, event.description),
+                      Paragraph(AppLocalizations.of(context)!.location, event.location, icon: const Icon(Icons.pin_drop_outlined)),
+                      Paragraph(AppLocalizations.of(context)!.category, event.category),
+                      Paragraph(AppLocalizations.of(context)!.notes, event.notes?? AppConstants.EMPTY),
+                    ]
+                )
+            )
           ],
         ),
       ),
@@ -68,6 +54,6 @@ class _EventPageState extends State<EventPage> {
   }
 
   Future editEvent() async {
-    Get.toNamed("/edit_event_page", arguments: {'event': widget.event, 'isNew': false});
+    Get.toNamed(NavigationConstants.EDIT_EVENT_PAGE, arguments: {'event': event, 'isNew': false});
   }
 }

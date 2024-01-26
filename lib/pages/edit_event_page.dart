@@ -1,27 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../components/input_text.dart';
 import '../constants/app_constants.dart';
+import '../constants/navigation_constants.dart';
 import '../models/event.dart';
 import '../data/events_controller.dart';
 import 'package:get/get.dart';
 
-class EditEventPage extends StatefulWidget {
+class EditEventPage extends StatelessWidget {
   final Event event;
   final bool isNew;
 
-  const EditEventPage(this.event, this.isNew, {super.key});
+  EditEventPage(this.event, this.isNew, {super.key});
 
-  @override
-  State<EditEventPage> createState() => _EditEventPageState();
-}
-
-class _EditEventPageState extends State<EditEventPage> {
   final TextEditingController imageCtlr = TextEditingController();
   final TextEditingController titleCtlr = TextEditingController();
   final TextEditingController descriptionCtlr = TextEditingController();
   final TextEditingController categoryCtlr = TextEditingController();
   final TextEditingController locationCtlr = TextEditingController();
-  final TextEditingController datesCtlr = TextEditingController();
   final TextEditingController recurringCtlr = TextEditingController();
   final TextEditingController notesCtlr = TextEditingController();
   final TextEditingController audienceCtlr = TextEditingController();
@@ -33,30 +29,24 @@ class _EditEventPageState extends State<EditEventPage> {
   final TextEditingController attachmentsCtlr = TextEditingController();
 
   @override
-  void initState() {
-    if(!widget.isNew){
-      imageCtlr.text = widget.event.image;
-      titleCtlr.text = widget.event.title;
-      descriptionCtlr.text = widget.event.description;
-      categoryCtlr.text = widget.event.category;
-      locationCtlr.text = widget.event.location;
-      // datesCtlr.text = widget.article.dates[0].toString();
-      recurringCtlr.text = widget.event.recurring.toString();
-      notesCtlr.text = widget.event.notes ?? AppConstants.EMPTY;
-      audienceCtlr.text = widget.event.audience ?? AppConstants.EMPTY;
-      typeCtlr.text = widget.event.type ?? AppConstants.GENERIC;
-      guideCtlr.text = widget.event.guide ?? AppConstants.EMPTY;
-      contactsCtlr.text = widget.event.contacts ?? AppConstants.EMPTY;
-      promoterCtlr.text = widget.event.promoter ?? AppConstants.EMPTY;
-      websiteCtlr.text = widget.event.link ?? AppConstants.EMPTY;
-      attachmentsCtlr.text = widget.event.attachments ?? AppConstants.EMPTY;
-    }
-
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
+
+    if(!isNew){
+      imageCtlr.text = event.image;
+      titleCtlr.text = event.title;
+      descriptionCtlr.text = event.description;
+      categoryCtlr.text = event.category;
+      locationCtlr.text = event.location;
+      recurringCtlr.text = event.recurring.toString();
+      notesCtlr.text = event.notes ?? AppConstants.EMPTY;
+      audienceCtlr.text = event.audience ?? AppConstants.EMPTY;
+      typeCtlr.text = event.type ?? AppConstants.GENERIC;
+      guideCtlr.text = event.guide ?? AppConstants.EMPTY;
+      contactsCtlr.text = event.contacts ?? AppConstants.EMPTY;
+      promoterCtlr.text = event.promoter ?? AppConstants.EMPTY;
+      websiteCtlr.text = event.link ?? AppConstants.EMPTY;
+      attachmentsCtlr.text = event.attachments ?? AppConstants.EMPTY;
+    }
 
     return Scaffold(
       appBar: AppBar(title: Text(AppLocalizations.of(context)!.details)),
@@ -82,44 +72,25 @@ class _EditEventPageState extends State<EditEventPage> {
   Future saveEvent() async {
     final eventsRepo = Get.put(EventsController());
 
-    widget.event.image = imageCtlr.text;
-    widget.event.title = titleCtlr.text;
-    widget.event.description = descriptionCtlr.text;
-    widget.event.category = categoryCtlr.text;
-    widget.event.location = locationCtlr.text;
-    widget.event.notes = notesCtlr.text;
-    widget.event.insertTime = widget.isNew ? DateTime.now() : widget.event.insertTime;
-    widget.event.insertUser = widget.isNew ? 'Andrea' : widget.event.insertUser;
-    widget.event.updateTime = DateTime.now();
-    widget.event.updateUser = 'Andrea';
+    event.image = imageCtlr.text;
+    event.title = titleCtlr.text;
+    event.description = descriptionCtlr.text;
+    event.category = categoryCtlr.text;
+    event.location = locationCtlr.text;
+    event.notes = notesCtlr.text;
+    event.insertTime = isNew ? DateTime.now() : event.insertTime;
+    event.insertUser = isNew ? 'Andrea' : event.insertUser;
+    event.updateTime = DateTime.now();
+    event.updateUser = 'Andrea';
 
-    String id;
-    if(widget.isNew){
-      eventsRepo.AddEvent(widget.event);
+    if(isNew){
+      await eventsRepo.addEvent(event);
     } else {
-      eventsRepo.UpdateEvent(widget.event);
+      await eventsRepo.updateEvent(event);
     }
 
-    id = eventsRepo.eventId.value;
-    eventsRepo.GetEventById(id);
+    await eventsRepo.getEventById(eventsRepo.eventId.value);
 
-    Event currentEvent = eventsRepo.events[0];
-    Get.toNamed("/event_page", arguments: currentEvent);
-  }
-}
-
-class InputText extends StatelessWidget {
-  final TextEditingController controller;
-  final String label;
-  const InputText(this.controller, this.label, {super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(padding: const EdgeInsets.all(10),
-      child: TextField(
-        controller: controller,
-        decoration: InputDecoration(hintText: label),
-      ),
-    );
+    Get.toNamed(NavigationConstants.EVENT_PAGE, arguments: eventsRepo.events[0]);
   }
 }

@@ -1,17 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:follow_me/controllers/scroll_controller.dart';
 import 'package:follow_me/data/events_controller.dart';
 import 'package:follow_me/models/event.dart';
 import 'package:get/get.dart';
 import '../components/fm_appbar.dart';
 import '../components/fm_tile.dart';
+import '../constants/navigation_constants.dart';
 
 class SpiritualEventsList extends StatelessWidget {
+
   const SpiritualEventsList({super.key});
 
   @override
   Widget build(BuildContext context) {
     final eventsRepo = Get.put(EventsController());
-    eventsRepo.GetEvents();
+    eventsRepo.getEvents();
+
+    final scroller = Get.put(ScrollingController());
+
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
     final Color oddItemColor = colorScheme.primary.withOpacity(0.05);
     final Color evenItemColor = colorScheme.primary.withOpacity(0.15);
@@ -23,18 +29,36 @@ class SpiritualEventsList extends StatelessWidget {
           appBar: const FmAppBar( ),
           body: TabBarView(
             children: <Widget>[
-              Obx(
+              Scrollbar(
+                  controller: scroller.scroller.value,
+                  child:
+                  Obx(
+                        () => ListView.builder(
+                        controller: scroller.scroller.value,
+                        itemCount: eventsRepo.events.length,
+                        itemBuilder: (context, index) {
+                          return FmTile(eventsRepo.events[index]);
+                        }),
+                  )
+
+              ),
+              /*Obx(
                     () => ListView.builder(
+                        controller: scroller.scroller,
                     itemCount: eventsRepo.events.length,
                     itemBuilder: (context, index) {
-                      Event currentEvent = eventsRepo.events[index];
-                      return FmTile( event: currentEvent,);
+                      return FmTile(eventsRepo.events[index]);
                     }),
-              ),
+              ),*/
               ListView.builder(
+                key: PageStorageKey<String>('pageOne'),
                 itemCount: 25,
                 itemBuilder: (BuildContext context, int index) {
                   return ListTile(
+                    onTap: () {
+                      eventsRepo.getEventById('');
+                      Get.toNamed(NavigationConstants.EDIT_EVENT_PAGE, arguments: {'event': eventsRepo.events[0], 'isNew': false});
+                    },
                     tileColor: index.isOdd ? oddItemColor : evenItemColor,
                     title: Text('test $index'),
                   );
@@ -44,7 +68,7 @@ class SpiritualEventsList extends StatelessWidget {
           ),
           floatingActionButton: FloatingActionButton(
             onPressed: (){
-              Get.toNamed("/edit_event_page", arguments: {'event': Event('', '', '', '', '',
+              Get.toNamed(NavigationConstants.EDIT_EVENT_PAGE, arguments: {'event': Event('', '', '', '', '',
                   '', DateTime.now(), '', DateTime.now()), 'isNew': true});
             },
             child: const Icon(Icons.add),

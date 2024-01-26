@@ -7,7 +7,7 @@ import 'cover_image.dart';
 class FmTile extends StatefulWidget {
   final Event event;
 
-  const FmTile({super.key, required this.event});
+  const FmTile(this.event, {super.key});
 
   @override
   State<FmTile> createState() => _FmTileState();
@@ -21,10 +21,11 @@ class _FmTileState extends State<FmTile> {
     return GestureDetector(
         onTap: onTap,
         child: Padding(
-            padding: const EdgeInsets.all(2),
+            padding: const EdgeInsets.fromLTRB(2,2,2,12),
             child: Card(
-                elevation: 5,
-                color: const Color(0xFFDAE1E1),
+                shadowColor: const Color(0xFF232222),
+                elevation: 10,
+                color: const Color(0xFFF9F9F9),
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8)),
                 child: Column(
@@ -75,6 +76,7 @@ class _FmTileState extends State<FmTile> {
                                       child: Text(
                                         widget.event.location,
                                         style: const TextStyle(
+                                          backgroundColor: Color(0x33FFFFFF),
                                           color: Colors.white,
                                           fontSize: 20.0,
                                         ),
@@ -87,8 +89,13 @@ class _FmTileState extends State<FmTile> {
                       ],
                     ),
                     ListTile(
-                      title: Text(widget.event.title),
-                      subtitle: Text(widget.event.description),
+                      title: Text(widget.event.title,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                          style: TextStyle(fontSize: 25)),
+                      subtitle: Text(widget.event.description,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 2,),
                     )
                   ],
                 )
@@ -98,6 +105,6 @@ class _FmTileState extends State<FmTile> {
   }
 
   onTap() {
-    Get.to( EventPage(widget.event), arguments: widget.event);
+    Get.to(() => EventPage(widget.event), arguments: widget.event);
   }
 }

@@ -52,7 +52,7 @@ class _FollowMeHomePageState extends State<FollowMeHomePage> with SingleTickerPr
   static const TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
 
   static final List<Widget> _widgetOptions = <Widget>[
-    const SpiritualEventsList(),
+    SpiritualEventsList(),
     const Text(
       'Index 1: Cultura',
       style: optionStyle,

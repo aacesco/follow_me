@@ -9,25 +9,25 @@ class EventsController extends GetxController{
   RxList<Event> events = <Event>[].obs;
   RxString eventId = ''.obs;
 
-  CollectionReference eventsCollection = FirebaseFirestore.instance.collection(AppConstants.SPIRITUAL_EVENTS);
+  CollectionReference eventsCollection = FirebaseFirestore.instance.collection(AppConstants.EVENTS);
 
-  void AddEvent(Event event) async {
+  Future addEvent(Event event) async {
     DocumentReference res = await eventsCollection.add(event.toMap());
-    eventId = res.id as RxString;
+    eventId.value = res.id;
   }
 
-  void GetEventById(String id) async {
+  Future getEventById(String id) async {
     DocumentSnapshot document = await eventsCollection.doc(id).get();
     Event item = Event.fromQuery(document);
     events.clear();
     events.add(item);
   }
 
-  void GetEvents() async {
-    SearchEvents('');
+  Future getEvents() async {
+    searchEvents('');
   }
 
-  void SearchEvents(String searchKey) async {
+  Future searchEvents(String searchKey) async {
     QuerySnapshot results = await eventsCollection
         .where(FieldsConstants.TITLE, isGreaterThanOrEqualTo: searchKey)
         .where(FieldsConstants.TITLE, isLessThan: '${searchKey}z')
@@ -37,12 +37,12 @@ class EventsController extends GetxController{
     parseList(results);
   }
 
-  void UpdateEvent(Event event) async {
+  Future updateEvent(Event event) async {
     await eventsCollection.doc(event.id).update(event.toMap());
-    eventId = event.id as RxString;
+    eventId.value = event.id ?? '';
   }
 
-  DeleteEvent(Event event) async {
+  Future deleteEvent(Event event) async {
     await eventsCollection.doc(event.id).delete();
   }
 
