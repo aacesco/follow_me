@@ -47,6 +47,11 @@ dependencies:
   firebase_database: ^10.4.0
   get: ^4.6.6
   flutter_markdown: ^0.6.18+3
+  firebase_auth: ^4.16.0
+  firebase_ui_auth: ^1.12.1
+  firebase_ui_oauth_google: ^1.2.17
+  google_sign_in: ^6.2.1
+  readmore: ^2.2.0
 
 dev_dependencies:
   flutter_test:
@@ -74,8 +79,7 @@ flutter:
 
   assets:
     - assets/
-    - assets/images/image_not_found.png
-    - assets/images/loading_image.gif
+    - assets/images/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

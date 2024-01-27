@@ -39,7 +39,16 @@ class EventPage extends StatelessWidget {
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Paragraph(event.title, ''),
+                      Padding(padding: const EdgeInsets.only(top: 2, bottom: 12),
+                          child:
+                          Text(event.title,
+                              style: const TextStyle(
+                                  color: Colors.black,
+                                  height: 1.3,
+                                  fontSize: 25,
+                                  fontWeight: FontWeight.bold)
+                          )
+                      ),
                       Paragraph(AppLocalizations.of(context)!.description, event.description),
                       Paragraph(AppLocalizations.of(context)!.location, event.location, icon: const Icon(Icons.pin_drop_outlined)),
                       Paragraph(AppLocalizations.of(context)!.category, event.category),

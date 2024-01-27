@@ -2,6 +2,7 @@ import 'package:follow_me/constants/navigation_constants.dart';
 import 'package:follow_me/global_bindings.dart';
 import 'package:follow_me/pages/spiritual_events_list.dart';
 import 'package:get/get.dart';
+import '../pages/auth_gate.dart';
 import '../pages/edit_event_page.dart';
 import '../pages/event_page.dart';
 
@@ -22,5 +23,10 @@ class AppRoutes {
         page: () => EditEventPage(Get.arguments['event'], Get.arguments['isNew']),
         binding: GlobalBindings()
     ),
+    GetPage(
+        name: NavigationConstants.AUTH_GATE,
+        page: () => const AuthGate(),
+        binding: GlobalBindings()
+    )
   ];
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:follow_me/constants/navigation_constants.dart';
 import 'package:get/get.dart';
 import '../models/event.dart';
 import '../pages/spiritual_events_list.dart';
@@ -36,13 +37,15 @@ class _FmAppBarState extends State<FmAppBar> {
             onPressed: (){
               final parent = context.findAncestorWidgetOfExactType<SpiritualEventsList>();
 
-              Get.toNamed("/edit_event_page", arguments: {'event': Event('', '', '', '', '',
+              Get.toNamed(NavigationConstants.EDIT_EVENT_PAGE, arguments: {'event': Event('', '', '', '', '',
                   '', DateTime.now(), '', DateTime.now()), 'isNew': true});
             },
           ),
           IconButton(
             icon: const Icon(Icons.search),
-            onPressed: (){},
+            onPressed: (){
+              Get.toNamed(NavigationConstants.AUTH_GATE);
+            },
           )
         ],
         scrolledUnderElevation: 4.0,

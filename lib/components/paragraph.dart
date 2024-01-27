@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:readmore/readmore.dart';
 
 class Paragraph extends StatelessWidget {
   final String header;
@@ -17,14 +18,21 @@ class Paragraph extends StatelessWidget {
                 children: [
                   Text(header,
                       style: const TextStyle(
-                        color: Color(0x9E575758),
+                          color: Color(0x9E575758),
                           fontSize: 15,
                           fontWeight: FontWeight.bold)
                   ),
                   //todo usare markdown per il contenuto
-                  Text(content,
-                      style: const TextStyle(
-                          fontSize: 20)
+                  ReadMoreText(
+                    content,
+                    style: const TextStyle(
+                        fontSize: 20),
+                    trimLines: 6,
+                    colorClickableText: Colors.pink,
+                    trimMode: TrimMode.Line,
+                    trimCollapsedText: 'Show more',
+                    trimExpandedText: 'Show less',
+                    moreStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                 ],
               )

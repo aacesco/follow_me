@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:follow_me/constants/app_constants.dart';
 import 'package:follow_me/controllers/scroll_controller.dart';
 import 'package:follow_me/data/events_controller.dart';
 import 'package:follow_me/models/event.dart';
@@ -14,7 +15,7 @@ class SpiritualEventsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final eventsRepo = Get.put(EventsController());
-    eventsRepo.getEvents();
+    eventsRepo.searchEvents(AppConstants.SPIRITUAL);
 
     final scroller = Get.put(ScrollingController());
 

@@ -23,15 +23,14 @@ class EventsController extends GetxController{
     events.add(item);
   }
 
-  Future getEvents() async {
+  Future getAllEvents() async {
     searchEvents('');
   }
 
   Future searchEvents(String searchKey) async {
     QuerySnapshot results = await eventsCollection
-        .where(FieldsConstants.TITLE, isGreaterThanOrEqualTo: searchKey)
-        .where(FieldsConstants.TITLE, isLessThan: '${searchKey}z')
-        .orderBy(FieldsConstants.TITLE)
+        .where(FieldsConstants.CATEGORY, isEqualTo: searchKey)
+        .orderBy(FieldsConstants.INSERT_TIME, descending: true)
         .get();
 
     parseList(results);
