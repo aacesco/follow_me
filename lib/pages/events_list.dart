@@ -8,14 +8,14 @@ import '../components/fm_appbar.dart';
 import '../components/fm_tile.dart';
 import '../constants/navigation_constants.dart';
 
-class SpiritualEventsList extends StatelessWidget {
-
-  const SpiritualEventsList({super.key});
+class EventsList extends StatelessWidget {
+  final String category;
+  const EventsList(this.category, {super.key});
 
   @override
   Widget build(BuildContext context) {
     final eventsRepo = Get.put(EventsController());
-    eventsRepo.searchEvents(AppConstants.SPIRITUAL);
+    eventsRepo.searchEvents(category);
 
     final scroller = Get.put(ScrollingController());
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:follow_me/constants/navigation_constants.dart';
-import 'package:follow_me/pages/spiritual_events_list.dart';
+import 'package:follow_me/pages/events_list.dart';
 import 'package:get/get.dart';
 import '../components/cover_image.dart';
 import '../components/paragraph.dart';
@@ -20,7 +20,7 @@ class EventPage extends StatelessWidget {
       appBar: AppBar(title: Text(AppLocalizations.of(context)!.details),
         leading: IconButton(
             onPressed: () {
-              Get.to(SpiritualEventsList());
+              Get.to(EventsList(event.category));
             },
             icon: const Icon(Icons.arrow_back)
         ),

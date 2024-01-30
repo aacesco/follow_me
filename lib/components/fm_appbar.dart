@@ -3,7 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:follow_me/constants/navigation_constants.dart';
 import 'package:get/get.dart';
 import '../models/event.dart';
-import '../pages/spiritual_events_list.dart';
+import '../pages/events_list.dart';
 
 
 class FmAppBar extends StatefulWidget implements PreferredSizeWidget {
@@ -35,7 +35,7 @@ class _FmAppBarState extends State<FmAppBar> {
           IconButton(
             icon: const Icon(Icons.add),
             onPressed: (){
-              final parent = context.findAncestorWidgetOfExactType<SpiritualEventsList>();
+              final parent = context.findAncestorWidgetOfExactType<EventsList>();
 
               Get.toNamed(NavigationConstants.EDIT_EVENT_PAGE, arguments: {'event': Event('', '', '', '', '',
                   '', DateTime.now(), '', DateTime.now()), 'isNew': true});

@@ -7,6 +7,7 @@ import '../firebase_options.dart';
 import 'home.dart';
 
 class AuthGate extends StatelessWidget {
+
   const AuthGate({super.key});
 
   @override
