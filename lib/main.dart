@@ -46,12 +46,15 @@ class FollowMeHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bottomBarCtrl = Get.put(BottomBarController(), permanent: false);
+    //todo è il metodo corretto per richiamarlo?
+    final bottomBarCtrl = Get.put(BottomBarController());
 
     return Scaffold(
-        body: Obx(() => Center(
-          child: bottomBarCtrl.getScreen(),
-        )),
+        body: Navigator(
+          key: Get.nestedKey(1),
+          initialRoute: NavigationConstants.SPIRITUAL_EVENTS,
+          onGenerateRoute: bottomBarCtrl.onGenerateRoute,
+        ),
         bottomNavigationBar: Obx(() =>
             BottomNavigationBar(
               type: BottomNavigationBarType.fixed,

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:follow_me/constants/app_constants.dart';
 import 'package:follow_me/controllers/scroll_controller.dart';
 import 'package:follow_me/data/events_controller.dart';
 import 'package:follow_me/models/event.dart';
@@ -58,7 +57,7 @@ class EventsList extends StatelessWidget {
                   return ListTile(
                     onTap: () {
                       eventsRepo.getEventById('');
-                      Get.toNamed(NavigationConstants.EDIT_EVENT_PAGE, arguments: {'event': eventsRepo.events[0], 'isNew': false});
+                      Get.toNamed(NavigationConstants.EDIT_EVENT_PAGE, id:1, arguments: {'event': eventsRepo.events[0], 'isNew': false});
                     },
                     tileColor: index.isOdd ? oddItemColor : evenItemColor,
                     title: Text('test $index'),
@@ -69,7 +68,7 @@ class EventsList extends StatelessWidget {
           ),
           floatingActionButton: FloatingActionButton(
             onPressed: (){
-              Get.toNamed(NavigationConstants.EDIT_EVENT_PAGE, arguments: {'event': Event('', '', '', '', '',
+              Get.toNamed(NavigationConstants.EDIT_EVENT_PAGE, id:1, arguments: {'event': Event('', '', '', '', '',
                   '', DateTime.now(), '', DateTime.now()), 'isNew': true});
             },
             child: const Icon(Icons.add),

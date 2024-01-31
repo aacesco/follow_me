@@ -91,6 +91,6 @@ class EditEventPage extends StatelessWidget {
 
     await eventsRepo.getEventById(eventsRepo.eventId.value);
 
-    Get.toNamed(NavigationConstants.EVENT_PAGE, arguments: eventsRepo.events[0]);
+    Get.toNamed(NavigationConstants.EVENT_PAGE, id: 1, arguments: eventsRepo.events[0]);
   }
 }

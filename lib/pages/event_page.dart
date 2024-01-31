@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:follow_me/constants/navigation_constants.dart';
-import 'package:follow_me/pages/events_list.dart';
 import 'package:get/get.dart';
+import '../app_routes/app_routes.dart';
 import '../components/cover_image.dart';
 import '../components/paragraph.dart';
 import '../constants/app_constants.dart';
@@ -20,7 +20,7 @@ class EventPage extends StatelessWidget {
       appBar: AppBar(title: Text(AppLocalizations.of(context)!.details),
         leading: IconButton(
             onPressed: () {
-              Get.to(EventsList(event.category));
+              Get.toNamed(AppRoutes.getRouteName(event), id: 1, arguments: {'event': event, 'isNew': false});
             },
             icon: const Icon(Icons.arrow_back)
         ),
@@ -63,6 +63,6 @@ class EventPage extends StatelessWidget {
   }
 
   Future editEvent() async {
-    Get.toNamed(NavigationConstants.EDIT_EVENT_PAGE, arguments: {'event': event, 'isNew': false});
+    Get.toNamed(NavigationConstants.EDIT_EVENT_PAGE, id: 1, arguments: {'event': event, 'isNew': false});
   }
 }

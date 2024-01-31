@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:follow_me/constants/navigation_constants.dart';
 import 'package:get/get.dart';
 import '../models/event.dart';
-import '../pages/event_page.dart';
 import 'cover_image.dart';
 
 class FmTile extends StatefulWidget {
@@ -105,6 +105,6 @@ class _FmTileState extends State<FmTile> {
   }
 
   onTap() {
-    Get.to(() => EventPage(widget.event), arguments: widget.event);
+    Get.toNamed(NavigationConstants.EVENT_PAGE, id: 1, arguments: {'event':widget.event});
   }
 }
