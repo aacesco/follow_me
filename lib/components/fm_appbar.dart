@@ -37,7 +37,7 @@ class _FmAppBarState extends State<FmAppBar> {
             onPressed: (){
               final parent = context.findAncestorWidgetOfExactType<EventsList>();
 
-              Get.toNamed(NavigationConstants.EDIT_EVENT_PAGE, id: 1, arguments: {'event': Event('', '', '', '', '',
+              Get.toNamed(NavigationConstants.EDIT_EVENT_PAGE, arguments: {'event': Event('', '', '', '', '',
                   '', DateTime.now(), '', DateTime.now()), 'isNew': true});
             },
           ),

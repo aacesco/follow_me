@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../components/bottomnavbar.dart';
 import '../components/input_text.dart';
 import '../constants/app_constants.dart';
 import '../constants/navigation_constants.dart';
@@ -49,23 +50,24 @@ class EditEventPage extends StatelessWidget {
     }
 
     return Scaffold(
-      appBar: AppBar(title: Text(AppLocalizations.of(context)!.details)),
-      floatingActionButton: FloatingActionButton(
-        onPressed: saveEvent,
-        child: const Icon(Icons.save),
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            InputText(imageCtlr, AppLocalizations.of(context)!.image),
-            InputText(titleCtlr, AppLocalizations.of(context)!.title),
-            InputText(descriptionCtlr, AppLocalizations.of(context)!.description),
-            InputText(categoryCtlr, AppLocalizations.of(context)!.category),
-            InputText(locationCtlr, AppLocalizations.of(context)!.location),
-            InputText(notesCtlr, AppLocalizations.of(context)!.notes),
-          ],
+        appBar: AppBar(title: Text(AppLocalizations.of(context)!.details)),
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              InputText(imageCtlr, AppLocalizations.of(context)!.image),
+              InputText(titleCtlr, AppLocalizations.of(context)!.title),
+              InputText(descriptionCtlr, AppLocalizations.of(context)!.description),
+              InputText(categoryCtlr, AppLocalizations.of(context)!.category),
+              InputText(locationCtlr, AppLocalizations.of(context)!.location),
+              InputText(notesCtlr, AppLocalizations.of(context)!.notes),
+            ],
+          ),
         ),
-      ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: saveEvent,
+          child: const Icon(Icons.save),
+        ),
+        bottomNavigationBar: const BottomNavBar()
     );
   }
 
@@ -91,6 +93,6 @@ class EditEventPage extends StatelessWidget {
 
     await eventsRepo.getEventById(eventsRepo.eventId.value);
 
-    Get.toNamed(NavigationConstants.EVENT_PAGE, id: 1, arguments: eventsRepo.events[0]);
+    Get.toNamed(NavigationConstants.EVENT_PAGE, arguments: eventsRepo.events[0]);
   }
 }

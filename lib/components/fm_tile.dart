@@ -29,6 +29,7 @@ class _FmTileState extends State<FmTile> {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8)),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Stack(
                       children: [
@@ -36,63 +37,44 @@ class _FmTileState extends State<FmTile> {
                           borderRadius: BorderRadius.circular(8.0),
                           child: CoverImage(event: widget.event),
                         ),
-                        Padding(
-                            padding: const EdgeInsets.all(2),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    // Top Row with IconButton
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        IconButton(
-                                            icon: isFavorite ?
-                                            const Icon(Icons.favorite) : const Icon(
-                                                Icons.favorite_border),
-                                            color: Colors.white,
-                                            onPressed: () {
-                                              setState(() {
-                                                isFavorite = !isFavorite;
-                                              });
-                                              //todo aggiornare lo status su firestore
-                                            }),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                                // Bottom Row with Text
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Container(
-                                      margin: const EdgeInsets.only(left: 16.0, bottom: 16.0),
-                                      child: Text(
-                                        widget.event.location,
-                                        style: const TextStyle(
-                                          backgroundColor: Color(0x33FFFFFF),
-                                          color: Colors.white,
-                                          fontSize: 20.0,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            )),
+                        Positioned(
+                          top: 10,
+                          right: 10,
+                          child: IconButton(
+                              icon: isFavorite ? const Icon(Icons.favorite)
+                                  : const Icon(Icons.favorite_border),
+                              color: Colors.white,
+                              onPressed: () {
+                                setState(() {
+                                  //todo aggiornare lo status su firestore
+                                  isFavorite = !isFavorite;
+                                });
+                              }),
+                        ),
+                        Positioned(
+                          bottom: 10,
+                          left: 10,
+                          child: Text(
+                            widget.event.location,
+                            style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold
+                            ),
+                          ),
+                        ),
                       ],
                     ),
+                    Text(widget.event.location,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                        textAlign: TextAlign.left,
+                        style: const TextStyle(fontSize: 14)),
                     ListTile(
                       title: Text(widget.event.title,
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
-                          style: TextStyle(fontSize: 25)),
+                          style: const TextStyle(fontSize: 25)),
                       subtitle: Text(widget.event.description,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 2,),
@@ -105,6 +87,6 @@ class _FmTileState extends State<FmTile> {
   }
 
   onTap() {
-    Get.toNamed(NavigationConstants.EVENT_PAGE, id: 1, arguments: {'event':widget.event});
+    Get.toNamed(NavigationConstants.EVENT_PAGE, arguments: {'event':widget.event});
   }
 }
