@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:follow_me/controllers/scroll_controller.dart';
-import 'package:follow_me/data/events_controller.dart';
+import 'package:follow_me/controllers/scroll_position_controller.dart';
+import 'package:follow_me/controllers/events_controller.dart';
 import 'package:follow_me/models/event.dart';
 import 'package:get/get.dart';
 import '../components/bottomnavbar.dart';
@@ -8,16 +8,41 @@ import '../components/fm_appbar.dart';
 import '../components/fm_tile.dart';
 import '../constants/navigation_constants.dart';
 
-class EventsList extends StatelessWidget {
+class EventsList extends StatefulWidget {
   final String category;
   const EventsList(this.category, {super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final eventsRepo = Get.put(EventsController());
-    eventsRepo.searchEvents(category);
+  State<EventsList> createState() => _EventsListState();
+}
 
-    final scroller = Get.put(ScrollingController());
+class _EventsListState extends State<EventsList> {
+
+  final ScrollController _scrollController = ScrollController();
+  final ScrollPositionController _scrollPositionController = Get.find();
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(_saveScrollPosition);
+    // Jump to saved position on init
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (_scrollController.hasClients) {
+        _scrollController.jumpTo(_scrollPositionController.getScrollPosition(widget.category));
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    EventsController eventsRepo = Get.find();
+    eventsRepo.searchEvents(widget.category);
 
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
     final Color oddItemColor = colorScheme.primary.withOpacity(0.05);
@@ -30,27 +55,14 @@ class EventsList extends StatelessWidget {
             appBar: const FmAppBar( ),
             body: TabBarView(
               children: <Widget>[
-                Scrollbar(
-                    controller: scroller.scroller.value,
-                    child:
-                    Obx(
-                          () => ListView.builder(
-                          controller: scroller.scroller.value,
-                          itemCount: eventsRepo.events.length,
-                          itemBuilder: (context, index) {
-                            return FmTile(eventsRepo.events[index]);
-                          }),
-                    )
-
+                Obx(
+                      () => ListView.builder(
+                      controller: _scrollController,
+                      itemCount: eventsRepo.events.length,
+                      itemBuilder: (context, index) {
+                        return FmTile(eventsRepo.events[index]);
+                      }),
                 ),
-                /*Obx(
-                    () => ListView.builder(
-                        controller: scroller.scroller,
-                    itemCount: eventsRepo.events.length,
-                    itemBuilder: (context, index) {
-                      return FmTile(eventsRepo.events[index]);
-                    }),
-              ),*/
                 ListView.builder(
                   key: PageStorageKey<String>('pageOne'),
                   itemCount: 25,
@@ -77,5 +89,9 @@ class EventsList extends StatelessWidget {
             bottomNavigationBar: const BottomNavBar()
         )
     );
+  }
+
+  void _saveScrollPosition() {
+    _scrollPositionController.saveScrollPosition(_scrollController.offset, widget.category);
   }
 }

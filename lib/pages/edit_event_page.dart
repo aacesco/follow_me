@@ -5,7 +5,7 @@ import '../components/input_text.dart';
 import '../constants/app_constants.dart';
 import '../constants/navigation_constants.dart';
 import '../models/event.dart';
-import '../data/events_controller.dart';
+import '../controllers/events_controller.dart';
 import 'package:get/get.dart';
 
 class EditEventPage extends StatelessWidget {
@@ -72,7 +72,7 @@ class EditEventPage extends StatelessWidget {
   }
 
   Future saveEvent() async {
-    final eventsRepo = Get.put(EventsController());
+    EventsController eventsRepo = Get.find();
 
     event.image = imageCtlr.text;
     event.title = titleCtlr.text;
@@ -93,6 +93,6 @@ class EditEventPage extends StatelessWidget {
 
     await eventsRepo.getEventById(eventsRepo.eventId.value);
 
-    Get.toNamed(NavigationConstants.EVENT_PAGE, arguments: eventsRepo.events[0]);
+    Get.toNamed(NavigationConstants.EVENT_PAGE, arguments: {'event': eventsRepo.events[0]});
   }
 }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:readmore/readmore.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class Paragraph extends StatelessWidget {
   final String header;
@@ -22,9 +24,34 @@ class Paragraph extends StatelessWidget {
                           fontSize: 15,
                           fontWeight: FontWeight.bold)
                   ),
-                  //todo usare markdown per il contenuto
+                  MarkdownBody(
+                      data: content.replaceAll("\\n", "\n"),
+                      selectable: true,
+                      onTapLink:(text, href, title) {
+                        launchUrlString(href!);
+                      },
+                      bulletBuilder: (index, bulletStyle) {
+                        if(index == 0){
+                          return const Icon(
+                            Icons.star,
+                            color: Colors.red,
+                            size: 20,
+                          );
+                        }
+                        return const Icon(
+                          Icons.star,
+                          color: Colors.blue,
+                          size: 20,
+                        );
+                      },
+                      styleSheet: MarkdownStyleSheet(
+                        h1: TextStyle(fontSize: 24),
+                        h2: TextStyle(fontSize: 20),
+                        a: TextStyle(color: Colors.blue),
+                      )
+                  ),
                   ReadMoreText(
-                    content,
+                    content.replaceAll("\\n", "\n"),
                     style: const TextStyle(
                         fontSize: 20),
                     trimLines: 6,
