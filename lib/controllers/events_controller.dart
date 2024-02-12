@@ -30,7 +30,7 @@ class EventsController extends GetxController{
   Future searchEvents(String searchKey) async {
     QuerySnapshot results = await eventsCollection
         .where(FieldsConstants.CATEGORY, isEqualTo: searchKey)
-        .orderBy(FieldsConstants.INSERT_TIME, descending: true)
+        .orderBy(FieldsConstants.INSERT_TIME, descending: false)
         .get();
 
     parseList(results);

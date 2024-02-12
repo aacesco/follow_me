@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:follow_me/components/temp_favorite.dart';
+import 'package:follow_me/constants/app_constants.dart';
 import 'package:follow_me/controllers/scroll_position_controller.dart';
 import 'package:follow_me/controllers/events_controller.dart';
 import 'package:follow_me/models/event.dart';
@@ -7,20 +7,20 @@ import 'package:get/get.dart';
 import '../components/bottomnavbar.dart';
 import '../components/fm_appbar.dart';
 import '../components/fm_tile.dart';
+import '../components/temp_favorite.dart';
 import '../constants/navigation_constants.dart';
 
-class EventsList extends StatefulWidget {
-  final String category;
-  const EventsList(this.category, {super.key});
+class SpiritualList extends StatefulWidget {
+  const SpiritualList({super.key});
 
   @override
-  State<EventsList> createState() => _EventsListState();
+  State<SpiritualList> createState() => _SpiritualListState();
 }
 
-class _EventsListState extends State<EventsList> {
+class _SpiritualListState extends State<SpiritualList> {
 
   final ScrollController _scrollController = ScrollController();
-  final ScrollPositionController _scrollPositionController = Get.put(ScrollPositionController());
+  final ScrollPositionController _scrollPositionController = Get.find();
 
   @override
   void initState() {
@@ -29,9 +29,7 @@ class _EventsListState extends State<EventsList> {
     // Jump to saved position on init
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (_scrollController.hasClients) {
-        // var pos = _scrollPositionController.getScrollPosition(widget.category);
-        // print("jump " + widget.category + " " + pos.toString());
-        _scrollController.jumpTo(_scrollPositionController.getScrollPosition(widget.category));
+        _scrollController.jumpTo(_scrollPositionController.getScrollPosition(AppConstants.SPIRITUAL));
       }
     });
   }
@@ -45,7 +43,7 @@ class _EventsListState extends State<EventsList> {
   @override
   Widget build(BuildContext context) {
     EventsController eventsRepo = Get.find();
-    eventsRepo.searchEvents(widget.category);
+    eventsRepo.searchEvents(AppConstants.SPIRITUAL);
 
     const int tabsCount = 2;
 
@@ -79,7 +77,7 @@ class _EventsListState extends State<EventsList> {
   }
 
   void _saveScrollPosition() {
-    print("_saveScrollPosition " + widget.category + " offset " + _scrollController.offset.toString());
-    _scrollPositionController.saveScrollPosition(_scrollController.offset, widget.category);
+    print("_saveScrollPosition " + AppConstants.SPIRITUAL + " offset " + _scrollController.offset.toString());
+    _scrollPositionController.saveScrollPosition(_scrollController.offset, AppConstants.SPIRITUAL);
   }
 }

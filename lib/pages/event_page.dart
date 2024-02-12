@@ -30,7 +30,7 @@ class EventPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              CoverImage(event: event),
+              CoverImage(event),
               Padding(
                   padding: const EdgeInsets.all(8),
                   child: Column(

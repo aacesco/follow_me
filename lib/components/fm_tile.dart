@@ -35,7 +35,7 @@ class _FmTileState extends State<FmTile> {
                       children: [
                         ClipRRect(
                           borderRadius: BorderRadius.circular(8.0),
-                          child: CoverImage(event: widget.event),
+                          child: CoverImage(widget.event),
                         ),
                         Positioned(
                           top: 10,

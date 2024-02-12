@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:follow_me/constants/navigation_constants.dart';
-import 'package:follow_me/pages/events_list.dart';
+import 'package:follow_me/pages/cultural_list.dart';
+import 'package:follow_me/pages/leisure_list.dart';
+import 'package:follow_me/pages/spiritual_list.dart';
 import 'package:get/get.dart';
 import '../constants/app_constants.dart';
 import '../models/event.dart';
@@ -14,10 +16,18 @@ class AppRoutes {
 
   static final List<GetPage> pages = [
     GetPage(
-      name: NavigationConstants.EVENTS_LIST,
-      page: () => EventsList(Get.arguments['event']),
+      name: NavigationConstants.SPIRITUAL_EVENTS,
+      page: () => const SpiritualList(),
     ),
     GetPage(
+      name: NavigationConstants.CULTURAL_EVENTS,
+      page: () => const CulturalList(),
+    ),
+    GetPage(
+      name: NavigationConstants.LEISURE_EVENTS,
+      page: () => const LeisureList(),
+    ),
+    /*GetPage(
       name: NavigationConstants.SPIRITUAL_EVENTS,
       page: () => const EventsList(AppConstants.SPIRITUAL),
     ),
@@ -28,7 +38,7 @@ class AppRoutes {
     GetPage(
       name: NavigationConstants.LEISURE_EVENTS,
       page: () => const EventsList(AppConstants.LEISURE),
-    ),
+    ),*/
     GetPage(
       name: NavigationConstants.PROMOTERS,
       page: () => const Center( child: Text(

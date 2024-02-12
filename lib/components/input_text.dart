@@ -7,11 +7,19 @@ class InputText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(padding: const EdgeInsets.all(10),
-      child: TextField(
-        controller: controller,
-        decoration: InputDecoration(hintText: label),
-      ),
+    return Container(
+        constraints: const BoxConstraints(
+          maxHeight: 100,
+        ),
+        child: Padding(padding: const EdgeInsets.all(10),
+          child: TextField(
+            expands: true,
+            maxLines: null,
+            minLines: null,
+            controller: controller,
+            decoration: InputDecoration(hintText: label),
+          ),
+        )
     );
   }
 }

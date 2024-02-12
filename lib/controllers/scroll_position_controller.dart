@@ -10,14 +10,17 @@ class ScrollPositionController extends GetxController {
   void saveScrollPosition(double position, String category) {
     switch (category) {
       case AppConstants.SPIRITUAL:{
+      //  print("spiritual: " + position.toString());
         spiritualEventsScrollPosition.value = position;
         break;
       }
       case AppConstants.CULTURAL:{
+       // print("cultural: " + position.toString());
         culturalEventsScrollPosition.value = position;
         break;
       }
       case AppConstants.LEISURE:{
+       // print("leisure: " + position.toString());
         leisureEventsScrollPosition.value = position;
         break;
       }
@@ -31,15 +34,12 @@ class ScrollPositionController extends GetxController {
     switch (category) {
       case AppConstants.SPIRITUAL:{
         return spiritualEventsScrollPosition.value;
-        break;
       }
       case AppConstants.CULTURAL:{
         return culturalEventsScrollPosition.value;
-        break;
       }
       case AppConstants.LEISURE:{
         return leisureEventsScrollPosition.value;
-        break;
       }
       default:
         return 0.0;

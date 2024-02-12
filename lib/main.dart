@@ -1,10 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:follow_me/pages/events_list.dart';
+import 'package:follow_me/pages/spiritual_list.dart';
 import 'package:get/get.dart';
 import 'app_routes/app_routes.dart';
-import 'constants/app_constants.dart';
 import 'firebase_options.dart';
 import 'global_bindings.dart';
 
@@ -33,7 +32,7 @@ class FollowMeApp extends StatelessWidget {
         hintColor: Colors.grey,
         fontFamily: 'Roboto',
       ),
-      home: const EventsList(AppConstants.SPIRITUAL),
+      home: const SpiritualList(),
     );
   }
 }
