@@ -21,7 +21,7 @@ class _FmTileState extends State<FmTile> {
     return GestureDetector(
         onTap: onTap,
         child: Padding(
-            padding: const EdgeInsets.fromLTRB(2,2,2,12),
+            padding: const EdgeInsets.fromLTRB(2, 2, 2, 12),
             child: Card(
                 shadowColor: const Color(0xFF232222),
                 elevation: 10,
@@ -35,13 +35,14 @@ class _FmTileState extends State<FmTile> {
                       children: [
                         ClipRRect(
                           borderRadius: BorderRadius.circular(8.0),
-                          child: CoverImage(widget.event),
+                          child: CoverImage(widget.event.image),
                         ),
                         Positioned(
                           top: 10,
                           right: 10,
                           child: IconButton(
-                              icon: isFavorite ? const Icon(Icons.favorite)
+                              icon: isFavorite
+                                  ? const Icon(Icons.favorite)
                                   : const Icon(Icons.favorite_border),
                               color: Colors.white,
                               onPressed: () {
@@ -59,8 +60,7 @@ class _FmTileState extends State<FmTile> {
                             style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 24,
-                                fontWeight: FontWeight.bold
-                            ),
+                                fontWeight: FontWeight.bold),
                           ),
                         ),
                       ],
@@ -75,18 +75,18 @@ class _FmTileState extends State<FmTile> {
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
                           style: const TextStyle(fontSize: 25)),
-                      subtitle: Text(widget.event.description,
+                      subtitle: Text(
+                        widget.event.description,
                         overflow: TextOverflow.ellipsis,
-                        maxLines: 2,),
+                        maxLines: 2,
+                      ),
                     )
                   ],
-                )
-            )
-        )
-    );
+                ))));
   }
 
   onTap() {
-    Get.toNamed(NavigationConstants.EVENT_PAGE, arguments: {'event':widget.event});
+    Get.toNamed(NavigationConstants.EVENT_PAGE,
+        arguments: {'event': widget.event});
   }
 }

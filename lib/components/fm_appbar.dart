@@ -5,7 +5,8 @@ import 'package:get/get.dart';
 import '../models/event.dart';
 
 class FmAppBar extends StatefulWidget implements PreferredSizeWidget {
-  const FmAppBar({Key? key}) : preferredSize = const Size.fromHeight(kToolbarHeight * 2);
+  const FmAppBar({Key? key})
+      : preferredSize = const Size.fromHeight(kToolbarHeight * 2);
 
   @override
   State<FmAppBar> createState() => _FmAppBarState();
@@ -15,32 +16,33 @@ class FmAppBar extends StatefulWidget implements PreferredSizeWidget {
 }
 
 class _FmAppBarState extends State<FmAppBar> {
-
   @override
   Widget build(BuildContext context) {
-
     return AppBar(
         leading: IconButton(
           icon: const Icon(Icons.menu),
-          onPressed: (){},
+          onPressed: () {},
         ),
         title: Text(AppLocalizations.of(context)!.category),
         actions: [
           IconButton(
             icon: const Icon(Icons.filter_list_alt),
-            onPressed: (){},
+            onPressed: () {},
           ),
           IconButton(
             icon: const Icon(Icons.add),
-            onPressed: (){
+            onPressed: () {
               //final parent = context.findAncestorWidgetOfExactType<EventsList>();
-              Get.toNamed(NavigationConstants.EDIT_EVENT_PAGE, arguments: {'event': Event('', '', '', '', '',
-                  '', DateTime.now(), '', DateTime.now()), 'isNew': true});
+              Get.toNamed(NavigationConstants.EDIT_EVENT_PAGE, arguments: {
+                'event': Event(
+                    '', '', '', '', '', '', DateTime.now(), '', DateTime.now()),
+                'isNew': true
+              });
             },
           ),
           IconButton(
             icon: const Icon(Icons.search),
-            onPressed: (){
+            onPressed: () {
               Get.toNamed(NavigationConstants.AUTH_GATE);
             },
           )
@@ -56,7 +58,6 @@ class _FmAppBarState extends State<FmAppBar> {
               text: AppLocalizations.of(context)!.favorite,
             ),
           ],
-        )
-    );
+        ));
   }
 }

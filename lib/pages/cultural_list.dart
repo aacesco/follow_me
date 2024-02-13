@@ -18,7 +18,6 @@ class CulturalList extends StatefulWidget {
 }
 
 class _CulturalListState extends State<CulturalList> {
-
   final ScrollController _scrollController = ScrollController();
   final ScrollPositionController _scrollPositionController = Get.find();
 
@@ -29,7 +28,8 @@ class _CulturalListState extends State<CulturalList> {
     // Jump to saved position on init
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (_scrollController.hasClients) {
-        _scrollController.jumpTo(_scrollPositionController.getScrollPosition(AppConstants.CULTURAL));
+        _scrollController.jumpTo(
+            _scrollPositionController.getScrollPosition(AppConstants.CULTURAL));
       }
     });
   }
@@ -50,11 +50,11 @@ class _CulturalListState extends State<CulturalList> {
     return DefaultTabController(
         length: tabsCount,
         child: Scaffold(
-            appBar: const FmAppBar( ),
+            appBar: const FmAppBar(),
             body: TabBarView(
               children: <Widget>[
                 Obx(
-                      () => ListView.builder(
+                  () => ListView.builder(
                       controller: _scrollController,
                       itemCount: eventsRepo.events.length,
                       itemBuilder: (context, index) {
@@ -65,19 +65,24 @@ class _CulturalListState extends State<CulturalList> {
               ],
             ),
             floatingActionButton: FloatingActionButton(
-              onPressed: (){
-                Get.toNamed(NavigationConstants.EDIT_EVENT_PAGE, arguments: {'event': Event('', '', '', '', '',
-                    '', DateTime.now(), '', DateTime.now()), 'isNew': true});
+              onPressed: () {
+                Get.toNamed(NavigationConstants.EDIT_EVENT_PAGE, arguments: {
+                  'event': Event('', '', '', '', '', '', DateTime.now(), '',
+                      DateTime.now()),
+                  'isNew': true
+                });
               },
               child: const Icon(Icons.add),
             ),
-            bottomNavigationBar: const BottomNavBar()
-        )
-    );
+            bottomNavigationBar: const BottomNavBar()));
   }
 
   void _saveScrollPosition() {
-    print("_saveScrollPosition " + AppConstants.CULTURAL + " offset " + _scrollController.offset.toString());
-    _scrollPositionController.saveScrollPosition(_scrollController.offset, AppConstants.CULTURAL);
+    print("_saveScrollPosition " +
+        AppConstants.CULTURAL +
+        " offset " +
+        _scrollController.offset.toString());
+    _scrollPositionController.saveScrollPosition(
+        _scrollController.offset, AppConstants.CULTURAL);
   }
 }

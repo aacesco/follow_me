@@ -16,43 +16,43 @@ class EventPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-        appBar: AppBar(title: Text(AppLocalizations.of(context)!.details),
+        appBar: AppBar(
+          title: Text(AppLocalizations.of(context)!.details),
           leading: IconButton(
               icon: const Icon(Icons.arrow_back),
               onPressed: () {
                 Get.toNamed(AppRoutes.getRouteName(event));
-              }
-          ),
+              }),
         ),
         body: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              CoverImage(event),
+              CoverImage(event.image),
               Padding(
                   padding: const EdgeInsets.all(8),
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Padding(padding: const EdgeInsets.only(top: 2, bottom: 12),
-                            child:
-                            Text(event.title,
+                        Padding(
+                            padding: const EdgeInsets.only(top: 2, bottom: 12),
+                            child: Text(event.title,
                                 style: const TextStyle(
                                     color: Colors.black,
                                     height: 1.3,
                                     fontSize: 25,
-                                    fontWeight: FontWeight.bold)
-                            )
-                        ),
-                        Paragraph(AppLocalizations.of(context)!.description, event.description),
-                        Paragraph(AppLocalizations.of(context)!.location, event.location, icon: const Icon(Icons.pin_drop_outlined)),
-                        Paragraph(AppLocalizations.of(context)!.category, event.category),
-                        Paragraph(AppLocalizations.of(context)!.notes, event.notes?? AppConstants.EMPTY),
-                      ]
-                  )
-              )
+                                    fontWeight: FontWeight.bold))),
+                        Paragraph(AppLocalizations.of(context)!.description,
+                            event.description),
+                        Paragraph(AppLocalizations.of(context)!.location,
+                            event.location,
+                            icon: const Icon(Icons.pin_drop_outlined)),
+                        Paragraph(AppLocalizations.of(context)!.category,
+                            event.category),
+                        Paragraph(AppLocalizations.of(context)!.notes,
+                            event.notes ?? AppConstants.EMPTY),
+                      ]))
             ],
           ),
         ),
@@ -60,11 +60,11 @@ class EventPage extends StatelessWidget {
           onPressed: editEvent,
           child: const Icon(Icons.edit),
         ),
-        bottomNavigationBar: const BottomNavBar()
-    );
+        bottomNavigationBar: const BottomNavBar());
   }
 
   Future editEvent() async {
-    Get.toNamed(NavigationConstants.EDIT_EVENT_PAGE, arguments: {'event': event, 'isNew': false});
+    Get.toNamed(NavigationConstants.EDIT_EVENT_PAGE,
+        arguments: {'event': event, 'isNew': false});
   }
 }

@@ -11,7 +11,8 @@ class InputText extends StatelessWidget {
         constraints: const BoxConstraints(
           maxHeight: 100,
         ),
-        child: Padding(padding: const EdgeInsets.all(10),
+        child: Padding(
+          padding: const EdgeInsets.all(10),
           child: TextField(
             expands: true,
             maxLines: null,
@@ -19,7 +20,6 @@ class InputText extends StatelessWidget {
             controller: controller,
             decoration: InputDecoration(hintText: label),
           ),
-        )
-    );
+        ));
   }
 }

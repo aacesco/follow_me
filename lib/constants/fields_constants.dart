@@ -1,4 +1,4 @@
-class FieldsConstants{
+class FieldsConstants {
   static const String ID = "id";
   static const String TITLE = "Title";
   static const String DESCRIPTION = "Description";

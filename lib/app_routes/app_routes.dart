@@ -11,8 +11,8 @@ import '../pages/edit_event_page.dart';
 import '../pages/event_page.dart';
 
 class AppRoutes {
-
-  static const TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+  static const TextStyle optionStyle =
+      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
 
   static final List<GetPage> pages = [
     GetPage(
@@ -41,14 +41,16 @@ class AppRoutes {
     ),*/
     GetPage(
       name: NavigationConstants.PROMOTERS,
-      page: () => const Center( child: Text(
+      page: () => const Center(
+          child: Text(
         'Index 3: Promotori',
         style: optionStyle,
       )),
     ),
     GetPage(
       name: NavigationConstants.INFO,
-      page: () => const Center( child: Text(
+      page: () => const Center(
+          child: Text(
         'Index 4: Info',
         style: optionStyle,
       )),
@@ -67,17 +69,20 @@ class AppRoutes {
     )
   ];
 
-  static String getRouteName(Event event){
+  static String getRouteName(Event event) {
     switch (event.category) {
-      case AppConstants.SPIRITUAL:{
-        return NavigationConstants.SPIRITUAL_EVENTS;
-      }
-      case AppConstants.CULTURAL:{
-        return NavigationConstants.CULTURAL_EVENTS;
-      }
-      case AppConstants.LEISURE:{
-        return NavigationConstants.LEISURE_EVENTS;
-      }
+      case AppConstants.SPIRITUAL:
+        {
+          return NavigationConstants.SPIRITUAL_EVENTS;
+        }
+      case AppConstants.CULTURAL:
+        {
+          return NavigationConstants.CULTURAL_EVENTS;
+        }
+      case AppConstants.LEISURE:
+        {
+          return NavigationConstants.LEISURE_EVENTS;
+        }
       default:
         return AppConstants.EMPTY;
     }

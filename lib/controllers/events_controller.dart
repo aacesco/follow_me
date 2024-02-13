@@ -4,12 +4,12 @@ import 'package:get/get.dart';
 import '../models/event.dart';
 import '../constants/fields_constants.dart';
 
-class EventsController extends GetxController{
-
+class EventsController extends GetxController {
   RxList<Event> events = <Event>[].obs;
   RxString eventId = ''.obs;
 
-  CollectionReference eventsCollection = FirebaseFirestore.instance.collection(AppConstants.EVENTS);
+  CollectionReference eventsCollection =
+      FirebaseFirestore.instance.collection(AppConstants.EVENTS);
 
   Future addEvent(Event event) async {
     DocumentReference res = await eventsCollection.add(event.toMap());

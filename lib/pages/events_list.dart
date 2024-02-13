@@ -18,9 +18,9 @@ class EventsList extends StatefulWidget {
 }
 
 class _EventsListState extends State<EventsList> {
-
   final ScrollController _scrollController = ScrollController();
-  final ScrollPositionController _scrollPositionController = Get.put(ScrollPositionController());
+  final ScrollPositionController _scrollPositionController =
+      Get.put(ScrollPositionController());
 
   @override
   void initState() {
@@ -31,7 +31,8 @@ class _EventsListState extends State<EventsList> {
       if (_scrollController.hasClients) {
         // var pos = _scrollPositionController.getScrollPosition(widget.category);
         // print("jump " + widget.category + " " + pos.toString());
-        _scrollController.jumpTo(_scrollPositionController.getScrollPosition(widget.category));
+        _scrollController.jumpTo(
+            _scrollPositionController.getScrollPosition(widget.category));
       }
     });
   }
@@ -52,11 +53,11 @@ class _EventsListState extends State<EventsList> {
     return DefaultTabController(
         length: tabsCount,
         child: Scaffold(
-            appBar: const FmAppBar( ),
+            appBar: const FmAppBar(),
             body: TabBarView(
               children: <Widget>[
                 Obx(
-                      () => ListView.builder(
+                  () => ListView.builder(
                       controller: _scrollController,
                       itemCount: eventsRepo.events.length,
                       itemBuilder: (context, index) {
@@ -67,19 +68,24 @@ class _EventsListState extends State<EventsList> {
               ],
             ),
             floatingActionButton: FloatingActionButton(
-              onPressed: (){
-                Get.toNamed(NavigationConstants.EDIT_EVENT_PAGE, arguments: {'event': Event('', '', '', '', '',
-                    '', DateTime.now(), '', DateTime.now()), 'isNew': true});
+              onPressed: () {
+                Get.toNamed(NavigationConstants.EDIT_EVENT_PAGE, arguments: {
+                  'event': Event('', '', '', '', '', '', DateTime.now(), '',
+                      DateTime.now()),
+                  'isNew': true
+                });
               },
               child: const Icon(Icons.add),
             ),
-            bottomNavigationBar: const BottomNavBar()
-        )
-    );
+            bottomNavigationBar: const BottomNavBar()));
   }
 
   void _saveScrollPosition() {
-    print("_saveScrollPosition " + widget.category + " offset " + _scrollController.offset.toString());
-    _scrollPositionController.saveScrollPosition(_scrollController.offset, widget.category);
+    print("_saveScrollPosition " +
+        widget.category +
+        " offset " +
+        _scrollController.offset.toString());
+    _scrollPositionController.saveScrollPosition(
+        _scrollController.offset, widget.category);
   }
 }

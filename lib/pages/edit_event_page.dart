@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../components/bottomnavbar.dart';
+import '../components/input_image.dart';
 import '../components/input_text.dart';
 import '../constants/app_constants.dart';
 import '../constants/navigation_constants.dart';
+import '../controllers/image_picker_controller.dart';
 import '../models/event.dart';
 import '../controllers/events_controller.dart';
 import 'package:get/get.dart';
@@ -13,8 +15,8 @@ class EditEventPage extends StatelessWidget {
   final bool isNew;
 
   EditEventPage(this.event, this.isNew, {super.key});
-
-  final TextEditingController imageCtlr = TextEditingController();
+  //todo se avessi più immagini distinte da mostrare, dovrei usare solo ImagePickerController() ?
+  final ImagePickerController imageCtlr = Get.put(ImagePickerController());
   final TextEditingController titleCtlr = TextEditingController();
   final TextEditingController descriptionCtlr = TextEditingController();
   final TextEditingController categoryCtlr = TextEditingController();
@@ -31,9 +33,8 @@ class EditEventPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    if(!isNew){
-      imageCtlr.text = event.image;
+    if (!isNew) {
+      imageCtlr.imageUrl.value = event.image;
       titleCtlr.text = event.title;
       descriptionCtlr.text = event.description;
       categoryCtlr.text = event.category;
@@ -54,9 +55,10 @@ class EditEventPage extends StatelessWidget {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              InputText(imageCtlr, AppLocalizations.of(context)!.image),
+              InputImage(imageCtlr, AppLocalizations.of(context)!.image),
               InputText(titleCtlr, AppLocalizations.of(context)!.title),
-              InputText(descriptionCtlr, AppLocalizations.of(context)!.description),
+              InputText(
+                  descriptionCtlr, AppLocalizations.of(context)!.description),
               InputText(categoryCtlr, AppLocalizations.of(context)!.category),
               InputText(locationCtlr, AppLocalizations.of(context)!.location),
               InputText(notesCtlr, AppLocalizations.of(context)!.notes),
@@ -67,14 +69,13 @@ class EditEventPage extends StatelessWidget {
           onPressed: saveEvent,
           child: const Icon(Icons.save),
         ),
-        bottomNavigationBar: const BottomNavBar()
-    );
+        bottomNavigationBar: const BottomNavBar());
   }
 
   Future saveEvent() async {
     EventsController eventsRepo = Get.find();
 
-    event.image = imageCtlr.text;
+    event.image = imageCtlr.imageUrl.value;
     event.title = titleCtlr.text;
     event.description = descriptionCtlr.text;
     event.category = categoryCtlr.text;
@@ -85,7 +86,7 @@ class EditEventPage extends StatelessWidget {
     event.updateTime = DateTime.now();
     event.updateUser = 'Andrea';
 
-    if(isNew){
+    if (isNew) {
       await eventsRepo.addEvent(event);
     } else {
       await eventsRepo.updateEvent(event);
@@ -93,6 +94,7 @@ class EditEventPage extends StatelessWidget {
 
     await eventsRepo.getEventById(eventsRepo.eventId.value);
 
-    Get.toNamed(NavigationConstants.EVENT_PAGE, arguments: {'event': eventsRepo.events[0]});
+    Get.toNamed(NavigationConstants.EVENT_PAGE,
+        arguments: {'event': eventsRepo.events[0]});
   }
 }

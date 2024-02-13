@@ -11,61 +11,58 @@ class Paragraph extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(padding: const EdgeInsets.only(top: 2, bottom: 12),
+    return Padding(
+      padding: const EdgeInsets.only(top: 2, bottom: 12),
       child: Row(
         children: [
           Expanded(
-              child:  Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(header,
-                      style: const TextStyle(
-                          color: Color(0x9E575758),
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold)
-                  ),
-                  MarkdownBody(
-                      data: content.replaceAll("\\n", "\n"),
-                      selectable: true,
-                      onTapLink:(text, href, title) {
-                        launchUrlString(href!);
-                      },
-                      bulletBuilder: (index, bulletStyle) {
-                        if(index == 0){
-                          return const Icon(
-                            Icons.star,
-                            color: Colors.red,
-                            size: 20,
-                          );
-                        }
-                        return const Icon(
-                          Icons.star,
-                          color: Colors.blue,
-                          size: 20,
-                        );
-                      },
-                      styleSheet: MarkdownStyleSheet(
-                        h1: TextStyle(fontSize: 24),
-                        h2: TextStyle(fontSize: 20),
-                        a: TextStyle(color: Colors.blue),
-                      )
-                  ),
-                  ReadMoreText(
-                    content.replaceAll("\\n", "\n"),
-                    style: const TextStyle(
-                        fontSize: 20),
-                    trimLines: 6,
-                    colorClickableText: Colors.pink,
-                    trimMode: TrimMode.Line,
-                    trimCollapsedText: 'Show more',
-                    trimExpandedText: 'Show less',
-                    moreStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                  ),
-                ],
-              )
-          ),
-          if (icon != null)
-            icon!,
+              child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(header,
+                  style: const TextStyle(
+                      color: Color(0x9E575758),
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold)),
+              MarkdownBody(
+                  data: content.replaceAll("\\n", "\n"),
+                  selectable: true,
+                  onTapLink: (text, href, title) {
+                    launchUrlString(href!);
+                  },
+                  bulletBuilder: (index, bulletStyle) {
+                    if (index == 0) {
+                      return const Icon(
+                        Icons.star,
+                        color: Colors.red,
+                        size: 20,
+                      );
+                    }
+                    return const Icon(
+                      Icons.star,
+                      color: Colors.blue,
+                      size: 20,
+                    );
+                  },
+                  styleSheet: MarkdownStyleSheet(
+                    h1: TextStyle(fontSize: 24),
+                    h2: TextStyle(fontSize: 20),
+                    a: TextStyle(color: Colors.blue),
+                  )),
+              ReadMoreText(
+                content.replaceAll("\\n", "\n"),
+                style: const TextStyle(fontSize: 20),
+                trimLines: 6,
+                colorClickableText: Colors.pink,
+                trimMode: TrimMode.Line,
+                trimCollapsedText: 'Show more',
+                trimExpandedText: 'Show less',
+                moreStyle:
+                    const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
+            ],
+          )),
+          if (icon != null) icon!,
         ],
       ),
     );

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class TempFavorite extends StatelessWidget {
-
   const TempFavorite({super.key});
 
   @override

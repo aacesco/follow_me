@@ -7,7 +7,6 @@ import '../firebase_options.dart';
 import 'home.dart';
 
 class AuthGate extends StatelessWidget {
-
   const AuthGate({super.key});
 
   @override
@@ -19,7 +18,10 @@ class AuthGate extends StatelessWidget {
           return SignInScreen(
             providers: [
               EmailAuthProvider(),
-              GoogleProvider(clientId: DefaultFirebaseOptions.currentPlatform.androidClientId ?? ''),
+              GoogleProvider(
+                  clientId:
+                      DefaultFirebaseOptions.currentPlatform.androidClientId ??
+                          ''),
             ],
             headerBuilder: (context, constraints, shrinkOffset) {
               return Padding(
