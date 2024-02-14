@@ -31,6 +31,7 @@ class InputImage extends StatelessWidget {
                   bottom: 10,
                   right: 10,
                   child: FloatingActionButton(
+                    heroTag: "inputImage",
                     onPressed: () {
                       imageCtrl.pickImageFromGallery();
                     },

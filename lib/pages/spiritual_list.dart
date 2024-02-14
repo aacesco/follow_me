@@ -78,7 +78,11 @@ class _SpiritualListState extends State<SpiritualList> {
   }
 
   void _saveScrollPosition() {
-    print("_saveScrollPosition " + AppConstants.SPIRITUAL + " offset " + _scrollController.offset.toString());
-    _scrollPositionController.saveScrollPosition(_scrollController.offset, AppConstants.SPIRITUAL);
+    print("_saveScrollPosition " +
+        AppConstants.SPIRITUAL +
+        " offset " +
+        _scrollController.offset.toString());
+    _scrollPositionController.saveScrollPosition(
+        _scrollController.offset, AppConstants.SPIRITUAL);
   }
 }

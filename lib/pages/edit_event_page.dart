@@ -1,5 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:follow_me/controllers/category_controller.dart';
 import '../components/bottomnavbar.dart';
 import '../components/input_image.dart';
 import '../components/input_text.dart';
@@ -15,11 +17,15 @@ class EditEventPage extends StatelessWidget {
   final bool isNew;
 
   EditEventPage(this.event, this.isNew, {super.key});
+
   //todo se avessi più immagini distinte da mostrare, dovrei usare solo ImagePickerController() ?
+  //todo in questo caso, devo usare get.put o solo la classe in sè? usare get.create?
   final ImagePickerController imageCtlr = Get.put(ImagePickerController());
+
+  final CategoryController categoryCtlr = Get.put(CategoryController());
+
   final TextEditingController titleCtlr = TextEditingController();
   final TextEditingController descriptionCtlr = TextEditingController();
-  final TextEditingController categoryCtlr = TextEditingController();
   final TextEditingController locationCtlr = TextEditingController();
   final TextEditingController recurringCtlr = TextEditingController();
   final TextEditingController notesCtlr = TextEditingController();
@@ -31,13 +37,24 @@ class EditEventPage extends StatelessWidget {
   final TextEditingController websiteCtlr = TextEditingController();
   final TextEditingController attachmentsCtlr = TextEditingController();
 
+  /* String? audience;
+  String? type;
+  String? contacts;
+  String? promoter;
+  String? guide;
+  String? link;
+  int? likes; //parteciperò/ interessato
+  List<String>? tags;*/
+
   @override
   Widget build(BuildContext context) {
+    //categoryCtlr.changeCategory(AppConstants.SPIRITUAL);
+
     if (!isNew) {
       imageCtlr.imageUrl.value = event.image;
       titleCtlr.text = event.title;
       descriptionCtlr.text = event.description;
-      categoryCtlr.text = event.category;
+      categoryCtlr.selectedCategory.value = event.category;
       locationCtlr.text = event.location;
       recurringCtlr.text = event.recurring.toString();
       notesCtlr.text = event.notes ?? AppConstants.EMPTY;
@@ -56,12 +73,26 @@ class EditEventPage extends StatelessWidget {
           child: Column(
             children: [
               InputImage(imageCtlr, AppLocalizations.of(context)!.image),
-              InputText(titleCtlr, AppLocalizations.of(context)!.title),
+              Text(AppLocalizations.of(context)!.category),
+              CupertinoSegmentedControl<String>(
+                  children: CategoryController.categories(context),
+                  onValueChanged: (String category) {
+                    categoryCtlr.changeCategory(category);
+                  },
+                  groupValue: categoryCtlr.selectedCategory.value),
+              InputText(titleCtlr, AppLocalizations.of(context)!.title,
+                  mandatory: true),
               InputText(
-                  descriptionCtlr, AppLocalizations.of(context)!.description),
-              InputText(categoryCtlr, AppLocalizations.of(context)!.category),
-              InputText(locationCtlr, AppLocalizations.of(context)!.location),
+                  descriptionCtlr, AppLocalizations.of(context)!.description,
+                  mandatory: true),
+              InputText(locationCtlr, AppLocalizations.of(context)!.location,
+                  mandatory: true),
               InputText(notesCtlr, AppLocalizations.of(context)!.notes),
+              InputText(audienceCtlr, AppLocalizations.of(context)!.audience),
+              InputText(typeCtlr, AppLocalizations.of(context)!.type),
+              InputText(contactsCtlr, AppLocalizations.of(context)!.contacts),
+              InputText(promoterCtlr, AppLocalizations.of(context)!.promoter),
+              InputText(guideCtlr, AppLocalizations.of(context)!.guide),
             ],
           ),
         ),
@@ -78,9 +109,14 @@ class EditEventPage extends StatelessWidget {
     event.image = imageCtlr.imageUrl.value;
     event.title = titleCtlr.text;
     event.description = descriptionCtlr.text;
-    event.category = categoryCtlr.text;
+    event.category = categoryCtlr.selectedCategory.value;
     event.location = locationCtlr.text;
     event.notes = notesCtlr.text;
+    event.audience = audienceCtlr.text;
+    event.type = typeCtlr.text;
+    event.contacts = contactsCtlr.text;
+    event.promoter = promoterCtlr.text;
+    event.guide = guideCtlr.text;
     event.insertTime = isNew ? DateTime.now() : event.insertTime;
     event.insertUser = isNew ? 'Andrea' : event.insertUser;
     event.updateTime = DateTime.now();

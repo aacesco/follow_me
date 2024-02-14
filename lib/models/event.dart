@@ -46,10 +46,25 @@ class Event extends Markers {
     title = document[FieldsConstants.TITLE];
     description = document[FieldsConstants.DESCRIPTION];
     category = document[FieldsConstants.CATEGORY];
+    location = document[FieldsConstants.LOCATION];
     notes = map.containsKey(FieldsConstants.NOTES)
         ? document[FieldsConstants.NOTES]
         : AppConstants.EMPTY;
-    location = document[FieldsConstants.LOCATION];
+    audience = map.containsKey(FieldsConstants.AUDIENCE)
+        ? document[FieldsConstants.AUDIENCE]
+        : AppConstants.EMPTY;
+    type = map.containsKey(FieldsConstants.TYPE)
+        ? document[FieldsConstants.TYPE]
+        : AppConstants.EMPTY;
+    contacts = map.containsKey(FieldsConstants.CONTACTS)
+        ? document[FieldsConstants.CONTACTS]
+        : AppConstants.EMPTY;
+    promoter = map.containsKey(FieldsConstants.PROMOTER)
+        ? document[FieldsConstants.PROMOTER]
+        : AppConstants.EMPTY;
+    guide = map.containsKey(FieldsConstants.GUIDE)
+        ? document[FieldsConstants.GUIDE]
+        : AppConstants.EMPTY;
   }
 
   Map<String, dynamic> toMap() {
@@ -60,6 +75,11 @@ class Event extends Markers {
       FieldsConstants.CATEGORY: category,
       FieldsConstants.LOCATION: location,
       FieldsConstants.NOTES: notes,
+      FieldsConstants.AUDIENCE: audience,
+      FieldsConstants.TYPE: type,
+      FieldsConstants.CONTACTS: contacts,
+      FieldsConstants.PROMOTER: promoter,
+      FieldsConstants.GUIDE: guide,
       FieldsConstants.INSERT_TIME: insertTime,
       FieldsConstants.INSERT_USER: insertUser,
       FieldsConstants.UPDATE_TIME: updateTime,

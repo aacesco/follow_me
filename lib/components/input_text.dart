@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 class InputText extends StatelessWidget {
   final TextEditingController controller;
   final String label;
-  const InputText(this.controller, this.label, {super.key});
+  final bool? mandatory;
+  const InputText(this.controller, this.label, {super.key, this.mandatory});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +19,12 @@ class InputText extends StatelessWidget {
             maxLines: null,
             minLines: null,
             controller: controller,
-            decoration: InputDecoration(hintText: label),
+            decoration: InputDecoration(
+                hintText: label,
+                border: mandatory ?? false
+                    ? const OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.redAccent))
+                    : null),
           ),
         ));
   }
