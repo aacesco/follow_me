@@ -78,10 +78,8 @@ class _CulturalListState extends State<CulturalList> {
   }
 
   void _saveScrollPosition() {
-    print("_saveScrollPosition " +
-        AppConstants.CULTURAL +
-        " offset " +
-        _scrollController.offset.toString());
+    print(
+        "_saveScrollPosition ${AppConstants.CULTURAL} offset ${_scrollController.offset}");
     _scrollPositionController.saveScrollPosition(
         _scrollController.offset, AppConstants.CULTURAL);
   }

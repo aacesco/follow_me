@@ -78,10 +78,8 @@ class _LeisureListState extends State<LeisureList> {
   }
 
   void _saveScrollPosition() {
-    print("_saveScrollPosition " +
-        AppConstants.LEISURE +
-        " offset " +
-        _scrollController.offset.toString());
+    print(
+        "_saveScrollPosition ${AppConstants.LEISURE} offset ${_scrollController.offset}");
     _scrollPositionController.saveScrollPosition(
         _scrollController.offset, AppConstants.LEISURE);
   }

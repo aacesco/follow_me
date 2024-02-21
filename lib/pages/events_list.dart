@@ -81,10 +81,8 @@ class _EventsListState extends State<EventsList> {
   }
 
   void _saveScrollPosition() {
-    print("_saveScrollPosition " +
-        widget.category +
-        " offset " +
-        _scrollController.offset.toString());
+    print(
+        "_saveScrollPosition ${widget.category} offset ${_scrollController.offset}");
     _scrollPositionController.saveScrollPosition(
         _scrollController.offset, widget.category);
   }

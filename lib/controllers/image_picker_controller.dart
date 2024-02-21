@@ -14,13 +14,12 @@ class ImagePickerController extends GetxController {
       return;
     }
 
-    pickedImage.mimeType;
     uploadImageToFirebase(pickedImage);
   }
 
   Future uploadImageToFirebase(XFile imageFile) async {
     Reference storageReference = FirebaseStorage.instance.ref().child(
-        'images/${DateTime.now().toString()}.${extension(imageFile.path)}');
+        'images/${DateTime.now().toString()}${extension(imageFile.path)}');
 
     UploadTask uploadTask = storageReference.putFile(File(imageFile.path));
 

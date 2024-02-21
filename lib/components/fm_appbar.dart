@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import '../models/event.dart';
 
 class FmAppBar extends StatefulWidget implements PreferredSizeWidget {
-  const FmAppBar({Key? key})
+  const FmAppBar({super.key})
       : preferredSize = const Size.fromHeight(kToolbarHeight * 2);
 
   @override

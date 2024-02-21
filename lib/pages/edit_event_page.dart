@@ -1,28 +1,24 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:follow_me/controllers/category_controller.dart';
+import 'package:follow_me/utils/enum_helper.dart';
 import '../components/bottomnavbar.dart';
 import '../components/input_image.dart';
 import '../components/input_text.dart';
 import '../constants/app_constants.dart';
+import '../constants/app_enums.dart';
 import '../constants/navigation_constants.dart';
 import '../controllers/image_picker_controller.dart';
 import '../models/event.dart';
 import '../controllers/events_controller.dart';
 import 'package:get/get.dart';
 
-class EditEventPage extends StatelessWidget {
+class EditEventPage extends StatefulWidget {
   final Event event;
   final bool isNew;
 
   EditEventPage(this.event, this.isNew, {super.key});
 
-  //todo se avessi più immagini distinte da mostrare, dovrei usare solo ImagePickerController() ?
-  //todo in questo caso, devo usare get.put o solo la classe in sè? usare get.create?
   final ImagePickerController imageCtlr = Get.put(ImagePickerController());
-
-  final CategoryController categoryCtlr = Get.put(CategoryController());
 
   final TextEditingController titleCtlr = TextEditingController();
   final TextEditingController descriptionCtlr = TextEditingController();
@@ -37,64 +33,79 @@ class EditEventPage extends StatelessWidget {
   final TextEditingController websiteCtlr = TextEditingController();
   final TextEditingController attachmentsCtlr = TextEditingController();
 
-  /* String? audience;
-  String? type;
-  String? contacts;
-  String? promoter;
-  String? guide;
-  String? link;
+  /*
   int? likes; //parteciperò/ interessato
   List<String>? tags;*/
 
   @override
-  Widget build(BuildContext context) {
-    //categoryCtlr.changeCategory(AppConstants.SPIRITUAL);
+  State<EditEventPage> createState() => _EditEventPageState();
+}
 
-    if (!isNew) {
-      imageCtlr.imageUrl.value = event.image;
-      titleCtlr.text = event.title;
-      descriptionCtlr.text = event.description;
-      categoryCtlr.selectedCategory.value = event.category;
-      locationCtlr.text = event.location;
-      recurringCtlr.text = event.recurring.toString();
-      notesCtlr.text = event.notes ?? AppConstants.EMPTY;
-      audienceCtlr.text = event.audience ?? AppConstants.EMPTY;
-      typeCtlr.text = event.type ?? AppConstants.GENERIC;
-      guideCtlr.text = event.guide ?? AppConstants.EMPTY;
-      contactsCtlr.text = event.contacts ?? AppConstants.EMPTY;
-      promoterCtlr.text = event.promoter ?? AppConstants.EMPTY;
-      websiteCtlr.text = event.link ?? AppConstants.EMPTY;
-      attachmentsCtlr.text = event.attachments ?? AppConstants.EMPTY;
+class _EditEventPageState extends State<EditEventPage> {
+  //Categories currentCategory = Categories.spiritual;
+
+  @override
+  Widget build(BuildContext context) {
+    if (!widget.isNew) {
+      widget.imageCtlr.imageUrl.value = widget.event.image;
+      widget.titleCtlr.text = widget.event.title;
+      widget.descriptionCtlr.text = widget.event.description;
+      //currentCategory = EnumHelper.fromName( Categories.values, widget.event.category, Categories.spiritual);
+      widget.locationCtlr.text = widget.event.location;
+      widget.recurringCtlr.text = widget.event.recurring.toString();
+      widget.notesCtlr.text = widget.event.notes ?? AppConstants.EMPTY;
+      widget.audienceCtlr.text = widget.event.audience ?? AppConstants.EMPTY;
+      widget.typeCtlr.text = widget.event.type ?? AppConstants.GENERIC;
+      widget.guideCtlr.text = widget.event.guide ?? AppConstants.EMPTY;
+      widget.contactsCtlr.text = widget.event.contacts ?? AppConstants.EMPTY;
+      widget.promoterCtlr.text = widget.event.promoter ?? AppConstants.EMPTY;
+      widget.websiteCtlr.text = widget.event.link ?? AppConstants.EMPTY;
+      widget.attachmentsCtlr.text =
+          widget.event.attachments ?? AppConstants.EMPTY;
     }
 
     return Scaffold(
         appBar: AppBar(title: Text(AppLocalizations.of(context)!.details)),
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              InputImage(imageCtlr, AppLocalizations.of(context)!.image),
-              Text(AppLocalizations.of(context)!.category),
-              CupertinoSegmentedControl<String>(
-                  children: CategoryController.categories(context),
-                  onValueChanged: (String category) {
-                    categoryCtlr.changeCategory(category);
+        body: ListView(
+          children: [
+            InputImage(widget.imageCtlr, AppLocalizations.of(context)!.image),
+            Text(AppLocalizations.of(context)!.category),
+            Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: SegmentedButton(
+                  segments: AppConstants.categoryList(context),
+                  selected: <Categories>{
+                    EnumHelper.fromName(Categories.values,
+                        widget.event.category, Categories.spiritual)
                   },
-                  groupValue: categoryCtlr.selectedCategory.value),
-              InputText(titleCtlr, AppLocalizations.of(context)!.title,
-                  mandatory: true),
-              InputText(
-                  descriptionCtlr, AppLocalizations.of(context)!.description,
-                  mandatory: true),
-              InputText(locationCtlr, AppLocalizations.of(context)!.location,
-                  mandatory: true),
-              InputText(notesCtlr, AppLocalizations.of(context)!.notes),
-              InputText(audienceCtlr, AppLocalizations.of(context)!.audience),
-              InputText(typeCtlr, AppLocalizations.of(context)!.type),
-              InputText(contactsCtlr, AppLocalizations.of(context)!.contacts),
-              InputText(promoterCtlr, AppLocalizations.of(context)!.promoter),
-              InputText(guideCtlr, AppLocalizations.of(context)!.guide),
-            ],
-          ),
+                  onSelectionChanged: (Set<Categories> category) {
+                    setState(() {
+                      print(
+                          'current cat: ${widget.event.category}, new categoria; ${category.first.name}');
+                      //todo ha senso o è meglio usare una variabile?
+                      widget.event.category = category.first.name;
+                      //currentCategory = category.first;
+                    });
+                  },
+                )),
+            InputText(widget.titleCtlr, AppLocalizations.of(context)!.title,
+                mandatory: true),
+            InputText(widget.descriptionCtlr,
+                AppLocalizations.of(context)!.description,
+                mandatory: true),
+            InputText(
+                widget.locationCtlr, AppLocalizations.of(context)!.location,
+                mandatory: true),
+            InputText(widget.notesCtlr, AppLocalizations.of(context)!.notes),
+            InputText(
+                widget.audienceCtlr, AppLocalizations.of(context)!.audience),
+            InputText(widget.typeCtlr, AppLocalizations.of(context)!.type),
+            InputText(
+                widget.contactsCtlr, AppLocalizations.of(context)!.contacts),
+            InputText(
+                widget.promoterCtlr, AppLocalizations.of(context)!.promoter),
+            InputText(widget.guideCtlr, AppLocalizations.of(context)!.guide),
+          ],
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: saveEvent,
@@ -106,26 +117,27 @@ class EditEventPage extends StatelessWidget {
   Future saveEvent() async {
     EventsController eventsRepo = Get.find();
 
-    event.image = imageCtlr.imageUrl.value;
-    event.title = titleCtlr.text;
-    event.description = descriptionCtlr.text;
-    event.category = categoryCtlr.selectedCategory.value;
-    event.location = locationCtlr.text;
-    event.notes = notesCtlr.text;
-    event.audience = audienceCtlr.text;
-    event.type = typeCtlr.text;
-    event.contacts = contactsCtlr.text;
-    event.promoter = promoterCtlr.text;
-    event.guide = guideCtlr.text;
-    event.insertTime = isNew ? DateTime.now() : event.insertTime;
-    event.insertUser = isNew ? 'Andrea' : event.insertUser;
-    event.updateTime = DateTime.now();
-    event.updateUser = 'Andrea';
+    widget.event.image = widget.imageCtlr.imageUrl.value;
+    widget.event.title = widget.titleCtlr.text;
+    widget.event.description = widget.descriptionCtlr.text;
+    //widget.event.category = currentCategory.name;
+    widget.event.location = widget.locationCtlr.text;
+    widget.event.notes = widget.notesCtlr.text;
+    widget.event.audience = widget.audienceCtlr.text;
+    widget.event.type = widget.typeCtlr.text;
+    widget.event.contacts = widget.contactsCtlr.text;
+    widget.event.promoter = widget.promoterCtlr.text;
+    widget.event.guide = widget.guideCtlr.text;
+    widget.event.insertTime =
+        widget.isNew ? DateTime.now() : widget.event.insertTime;
+    widget.event.insertUser = widget.isNew ? 'Andrea' : widget.event.insertUser;
+    widget.event.updateTime = DateTime.now();
+    widget.event.updateUser = 'Andrea';
 
-    if (isNew) {
-      await eventsRepo.addEvent(event);
+    if (widget.isNew) {
+      await eventsRepo.addEvent(widget.event);
     } else {
-      await eventsRepo.updateEvent(event);
+      await eventsRepo.updateEvent(widget.event);
     }
 
     await eventsRepo.getEventById(eventsRepo.eventId.value);
