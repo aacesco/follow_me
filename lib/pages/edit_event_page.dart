@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:follow_me/components/input_select.dart';
 import 'package:follow_me/utils/enum_helper.dart';
 import '../components/bottomnavbar.dart';
 import '../components/input_image.dart';
@@ -66,46 +67,47 @@ class _EditEventPageState extends State<EditEventPage> {
 
     return Scaffold(
         appBar: AppBar(title: Text(AppLocalizations.of(context)!.details)),
-        body: ListView(
-          children: [
-            InputImage(widget.imageCtlr, AppLocalizations.of(context)!.image),
-            Text(AppLocalizations.of(context)!.category),
-            Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: SegmentedButton(
-                  segments: AppConstants.categoryList(context),
-                  selected: <Categories>{
-                    EnumHelper.fromName(Categories.values,
-                        widget.event.category, Categories.spiritual)
-                  },
-                  onSelectionChanged: (Set<Categories> category) {
-                    setState(() {
-                      print(
-                          'current cat: ${widget.event.category}, new categoria; ${category.first.name}');
-                      //todo ha senso o è meglio usare una variabile?
-                      widget.event.category = category.first.name;
-                      //currentCategory = category.first;
-                    });
-                  },
-                )),
-            InputText(widget.titleCtlr, AppLocalizations.of(context)!.title,
-                mandatory: true),
-            InputText(widget.descriptionCtlr,
-                AppLocalizations.of(context)!.description,
-                mandatory: true),
-            InputText(
-                widget.locationCtlr, AppLocalizations.of(context)!.location,
-                mandatory: true),
-            InputText(widget.notesCtlr, AppLocalizations.of(context)!.notes),
-            InputText(
-                widget.audienceCtlr, AppLocalizations.of(context)!.audience),
-            InputText(widget.typeCtlr, AppLocalizations.of(context)!.type),
-            InputText(
-                widget.contactsCtlr, AppLocalizations.of(context)!.contacts),
-            InputText(
-                widget.promoterCtlr, AppLocalizations.of(context)!.promoter),
-            InputText(widget.guideCtlr, AppLocalizations.of(context)!.guide),
-          ],
+        body: SingleChildScrollView(
+          padding: const EdgeInsets.all(10.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              InputImage(widget.imageCtlr, AppLocalizations.of(context)!.image),
+              Text(AppLocalizations.of(context)!.category),
+              SegmentedButton(
+                segments: AppConstants.categoryList(context),
+                selected: <Categories>{
+                  EnumHelper.fromName(Categories.values, widget.event.category,
+                      Categories.spiritual)
+                },
+                onSelectionChanged: (Set<Categories> category) {
+                  setState(() {
+                    //todo ha senso o è meglio usare una variabile?
+                    widget.event.category = category.first.name;
+                    //currentCategory = category.first;
+                  });
+                },
+              ),
+              InputText(widget.titleCtlr, AppLocalizations.of(context)!.title,
+                  mandatory: true),
+              InputText(widget.descriptionCtlr,
+                  AppLocalizations.of(context)!.description,
+                  mandatory: true),
+              InputText(
+                  widget.locationCtlr, AppLocalizations.of(context)!.location,
+                  mandatory: true),
+              InputText(widget.notesCtlr, AppLocalizations.of(context)!.notes),
+              InputText(
+                  widget.audienceCtlr, AppLocalizations.of(context)!.audience),
+              InputSelect(widget.typeCtlr, AppLocalizations.of(context)!.type,
+                  widget.event.category),
+              InputText(
+                  widget.contactsCtlr, AppLocalizations.of(context)!.contacts),
+              InputText(
+                  widget.promoterCtlr, AppLocalizations.of(context)!.promoter),
+              InputText(widget.guideCtlr, AppLocalizations.of(context)!.guide),
+            ],
+          ),
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: saveEvent,

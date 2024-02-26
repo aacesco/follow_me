@@ -1,4 +1,3 @@
-import 'package:auto_size_text_field/auto_size_text_field.dart';
 import 'package:flutter/material.dart';
 
 class InputText extends StatelessWidget {
@@ -9,13 +8,9 @@ class InputText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final int numChars = controller.text.length;
-    double numLines = numChars / 40;
-    numLines = numLines == 0 ? 1 : numLines;
-
     return Padding(
-      padding: const EdgeInsets.all(10),
-      child: AutoSizeTextField(
+      padding: const EdgeInsets.only(bottom: 8.0, top: 8.0),
+      child: TextFormField(
         controller: controller,
         decoration: InputDecoration(
             hintText: label,
@@ -23,20 +18,10 @@ class InputText extends StatelessWidget {
                 ? const OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.redAccent))
                 : null),
-        fullwidth: true,
-        minFontSize: 20,
-        maxLines: numLines.ceil(),
-        style: TextStyle(fontSize: 20),
+        maxLines: null,
+        style: const TextStyle(fontSize: 20),
         textAlign: TextAlign.center,
       ),
-
-      /*TextField(
-        expands: true,
-        maxLines: null,
-        minLines: null,
-        controller: controller,
-        decoration: ,
-      ),*/
     );
   }
 }
