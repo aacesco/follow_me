@@ -74,6 +74,7 @@ class _EditEventPageState extends State<EditEventPage> {
             children: [
               InputImage(widget.imageCtlr, AppLocalizations.of(context)!.image),
               Text(AppLocalizations.of(context)!.category),
+              const SizedBox(height: 5),
               SegmentedButton(
                 segments: AppConstants.categoryList(context),
                 selected: <Categories>{
@@ -87,6 +88,12 @@ class _EditEventPageState extends State<EditEventPage> {
                     //currentCategory = category.first;
                   });
                 },
+                style: ButtonStyle(
+                    shape: MaterialStateProperty.all(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(0.0),
+                  ),
+                )),
               ),
               InputText(widget.titleCtlr, AppLocalizations.of(context)!.title,
                   mandatory: true),

@@ -5,4 +5,8 @@ class EnumHelper {
       orElse: () => defaultValue,
     );
   }
+
+  static List<String> getList<T>(List<T> values) {
+    return values.map((e) => e.toString().split('.').last).toList();
+  }
 }

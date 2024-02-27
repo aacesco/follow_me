@@ -3,6 +3,7 @@ import 'package:follow_me/utils/enum_helper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 
+import '../constants/app_constants.dart';
 import '../constants/app_enums.dart';
 
 class InputSelect extends StatefulWidget {
@@ -24,110 +25,56 @@ class _InputSelectState extends State<InputSelect> {
 
   @override
   Widget build(BuildContext context) {
+    widget.controller.text = widget.controller.text.isEmpty
+        ? AppConstants.GENERIC
+        : widget.controller.text;
+
     return Padding(
-      padding: const EdgeInsets.only(bottom: 8.0, top: 8.0),
-      child: buildDropdownMenu(widget.category, widget.label),
+        padding: const EdgeInsets.only(bottom: 8.0, top: 8.0),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Text(widget.label),
+          const SizedBox(height: 5),
+          buildDropdownButton(widget.category),
+        ]));
+  }
+
+  buildDropdownButton(String category) {
+    final List<String> values = retrieveValues(category);
+
+    return DropdownButton<String>(
+      isExpanded: true,
+      value: widget.controller.text,
+      hint: Text(widget.label),
+      icon: const Icon(Icons.arrow_downward),
+      elevation: 16,
+      underline: Container(
+        height: 1,
+        color: Colors.black,
+      ),
+      onChanged: (String? value) {
+        setState(() {
+          widget.controller.text = value!;
+        });
+      },
+      items: values.map<DropdownMenuItem<String>>((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Text(value),
+        );
+      }).toList(),
     );
   }
 
-  buildDropdownMenu(String category, String label) {
-    Categories categoryEnum =
-        EnumHelper.fromName(Categories.values, category, Categories.spiritual);
-
-    switch (categoryEnum) {
-      case Categories.spiritual:
-        return DropdownMenu<SpiritualTypes>(
-          controller: widget.controller,
-          enableSearch: false,
-          label: Text(label),
-          inputDecorationTheme: const InputDecorationTheme(
-            filled: true,
-            contentPadding: EdgeInsets.symmetric(vertical: 5.0),
-          ),
-          onSelected: (SpiritualTypes? type) {
-            setState(() {
-              selectedSpiritualType = type;
-            });
-          },
-          dropdownMenuEntries: buildEntries(),
-        );
-      case Categories.cultural:
-        return DropdownMenu<CulturalTypes>(
-          controller: widget.controller,
-          enableSearch: false,
-          label: Text(label),
-          inputDecorationTheme: const InputDecorationTheme(
-            filled: true,
-            contentPadding: EdgeInsets.symmetric(vertical: 5.0),
-          ),
-          onSelected: (CulturalTypes? type) {
-            setState(() {
-              selectedCulturalType = type;
-            });
-          },
-          dropdownMenuEntries:
-              CulturalTypes.values.map<DropdownMenuEntry<CulturalTypes>>(
-            (CulturalTypes type) {
-              String dynamicValue = type.name;
-              return DropdownMenuEntry<CulturalTypes>(
-                  value: type,
-                  label: Intl.message(
-                    dynamicValue,
-                    name: 'getDynamicString',
-                    args: [dynamicValue],
-                  ) //type.name//AppLocalizations.of(context)!.category
-                  );
-            },
-          ).toList(),
-        );
-      case Categories.leisure:
-        return DropdownMenu<LeisureTypes>(
-          controller: widget.controller,
-          enableSearch: false,
-          label: Text(label),
-          inputDecorationTheme: const InputDecorationTheme(
-            filled: true,
-            contentPadding: EdgeInsets.symmetric(vertical: 5.0),
-          ),
-          onSelected: (LeisureTypes? type) {
-            setState(() {
-              selectedLeisureType = type;
-            });
-          },
-          dropdownMenuEntries:
-              LeisureTypes.values.map<DropdownMenuEntry<LeisureTypes>>(
-            (LeisureTypes type) {
-              String dynamicValue = type.name;
-              return DropdownMenuEntry<LeisureTypes>(
-                  value: type,
-                  label: Intl.message(
-                    dynamicValue,
-                    name: 'getDynamicString',
-                    args: [dynamicValue],
-                  ) //type.name//AppLocalizations.of(context)!.category
-                  );
-            },
-          ).toList(),
-        );
+  List<String> retrieveValues(String category) {
+    switch (category) {
+      case "spiritual":
+        return EnumHelper.getList(SpiritualTypes.values);
+      case "cultural":
+        return EnumHelper.getList(CulturalTypes.values);
+      case "leisure":
+        return EnumHelper.getList(LeisureTypes.values);
+      default:
+        return [];
     }
-  }
-
-  buildEntries() {
-    List<DropdownMenuEntry<SpiritualTypes>> list =
-        SpiritualTypes.values.map<DropdownMenuEntry<SpiritualTypes>>(
-      (SpiritualTypes type) {
-        String dynamicValue = type.name;
-        return DropdownMenuEntry<SpiritualTypes>(
-            value: type,
-            label: Intl.message(
-              dynamicValue,
-              name: 'getDynamicString',
-              args: [dynamicValue],
-            ) //type.name//AppLocalizations.of(context)!.category
-            );
-      },
-    ).toList();
-
-    return list;
   }
 }
