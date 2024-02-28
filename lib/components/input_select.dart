@@ -5,6 +5,7 @@ import 'package:follow_me/utils/enum_helper.dart';
 
 import '../constants/app_constants.dart';
 import '../constants/app_enums.dart';
+import '../holders/value_label_holder.dart';
 
 class InputSelect extends StatefulWidget {
   final TextEditingController controller;
@@ -19,39 +20,27 @@ class InputSelect extends StatefulWidget {
 }
 
 class _InputSelectState extends State<InputSelect> {
-  late MapEntry<String, dynamic> selectedValue;
-  late final Map<String, dynamic> values1;
+  late ValueLabelHolder selectedValue;
 
   @override
   Widget build(BuildContext context) {
-    String key = widget.controller.text.isEmpty
-        ? AppConstants.GENERIC
-        : widget.controller.text;
-    String label = EnumHelper.getLocalizedValue(context, key);
-    values1 = retrieveValues1(widget.category);
-    selectedValue = values1.entries.firstWhere((e) => e.key == key);
-    widget.controller.text = key;
+    List<ValueLabelHolder> values = retrieveValues(widget.category);
+    String currentValue = setCurrentValue(values);
+
+    selectedValue = values.firstWhere((e) => e.value == currentValue);
+    widget.controller.text = currentValue;
 
     return Padding(
         padding: const EdgeInsets.only(bottom: 8.0, top: 8.0),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Text(widget.label),
           const SizedBox(height: 5),
-          buildDropdownButton(widget.category),
+          buildDropdownButton(widget.category, values),
         ]));
   }
 
-  buildDropdownButton(String category) {
-    //final List<String> values = retrieveValues(category);
-    int count = values1.entries.where((item) {
-      return item.key == selectedValue.key;
-    }).length;
-    bool presente = count == 1;
-    print("selectedValue: $selectedValue");
-    print("values1: $values1");
-    print("presente: $presente");
-
-    return DropdownButton<MapEntry<String, dynamic>>(
+  buildDropdownButton(String category, List<ValueLabelHolder> values) {
+    return DropdownButton<ValueLabelHolder>(
       isExpanded: true,
       value: selectedValue,
       hint: Text(widget.label),
@@ -61,37 +50,23 @@ class _InputSelectState extends State<InputSelect> {
         height: 1,
         color: Colors.black,
       ),
-      onChanged: (MapEntry<String, dynamic>? newValue) {
+      onChanged: (ValueLabelHolder? newValue) {
         setState(() {
-          print("selectedValue: $newValue");
           selectedValue = newValue!;
-          widget.controller.text = newValue.key;
+          widget.controller.text = newValue.value;
         });
       },
-      items: values1.entries.map<DropdownMenuItem<MapEntry<String, dynamic>>>(
-          (MapEntry<String, dynamic> entry) {
-        return DropdownMenuItem<MapEntry<String, dynamic>>(
+      items: values
+          .map<DropdownMenuItem<ValueLabelHolder>>((ValueLabelHolder entry) {
+        return DropdownMenuItem<ValueLabelHolder>(
           value: entry,
-          child: Text(entry.value),
+          child: Text(entry.label),
         );
       }).toList(),
     );
   }
 
-  List<String> retrieveValues(String category) {
-    switch (category) {
-      case "spiritual":
-        return EnumHelper.getList(SpiritualTypes.values);
-      case "cultural":
-        return EnumHelper.getList(CulturalTypes.values);
-      case "leisure":
-        return EnumHelper.getList(LeisureTypes.values);
-      default:
-        return [];
-    }
-  }
-
-  Map<String, dynamic> retrieveValues1(String category) {
+  List<ValueLabelHolder> retrieveValues(String category) {
     switch (category) {
       case "spiritual":
         return EnumHelper.getEntries(SpiritualTypes.values, context);
@@ -100,7 +75,18 @@ class _InputSelectState extends State<InputSelect> {
       case "leisure":
         return EnumHelper.getEntries(LeisureTypes.values, context);
       default:
-        return <String, dynamic>{};
+        return <ValueLabelHolder>[];
     }
+  }
+
+  String setCurrentValue(List<ValueLabelHolder> values) {
+    String currentValue = widget.controller.text;
+
+    if (currentValue.isEmpty ||
+        values.where((element) => element.value == currentValue).isEmpty) {
+      return AppConstants.GENERIC;
+    }
+
+    return currentValue;
   }
 }

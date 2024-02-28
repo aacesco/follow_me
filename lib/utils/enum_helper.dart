@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/get.dart';
 
+import '../holders/value_label_holder.dart';
+
 class EnumHelper {
   static T fromName<T>(List<T> values, String name, T defaultValue) {
     return values.firstWhere(
@@ -14,16 +16,17 @@ class EnumHelper {
     return values.map((e) => e.toString().split('.').last).toList();
   }
 
-  static Map<String, dynamic> getEntries<T>(
+  static List<ValueLabelHolder> getEntries<T>(
       List<T> values, BuildContext context) {
-    Map<String, dynamic> map = <String, dynamic>{};
+    List<ValueLabelHolder> list = <ValueLabelHolder>[];
     for (T e in values) {
-      String key = e.toString().split('.').last;
-      String label = getLocalizedValue(context, key);
-      map.addIf(!map.keys.contains(key), key, label);
+      String value = e.toString().split('.').last;
+      String label = getLocalizedValue(context, value);
+      ValueLabelHolder item = ValueLabelHolder(value, label);
+      list.addIf((list.where((element) => element.value == value).isEmpty), item);
     }
 
-    return map;
+    return list;
   }
 
   static getLocalizedValue(BuildContext context, String value) {
