@@ -29,5 +29,39 @@
   "promoters": "Promoter",
   "info": "Info",
   "favorite": "Favorite",
-  "all": "All"
+  "all": "All",
+
+  "spiritual":"Spiritual",
+  "cultural":"Cultural",
+  "leisure":"Leisure",
+
+  "pilgrimage":"Pilgrimage",
+  "discernment":"Discernment",
+  "fiances":"Fiances",
+  "affectivity":"Affectivity",
+  "family":"Family",
+  "exercises":"Exercises",
+  "mission":"Mission",
+  "catechesis":"Catechesis",
+  "religiousVocation":"ReligiousVocation",
+  "femininity":"Femininity",
+  "easter":"Easter",
+  "commonLife":"CommonLife",
+  "retreat":"Retreat",
+
+  "exhibitions":"Exhibitions",
+  "theater":"Theater",
+  "cinema":"Cinema",
+  "literature":"Literature",
+  "conferences":"Conferences",
+  "festival":"Festival",
+  "concerts":"Concerts",
+  "socioPolitical":"SocioPolitical",
+
+  "generic":"Generic",
+  "excursion":"Excursion",
+  "kitchen":"Kitchen",
+  "sport":"Sport",
+  "picnic":"Picnic",
+  "games":"Games"
 }

@@ -24,5 +24,39 @@
   "promoters": "Promotori",
   "info": "Info",
   "favorite": "Preferiti",
-  "all": "Tutto"
+  "all": "Tutto",
+
+  "spiritual":"Spirituale",
+  "cultural":"Culturale",
+  "leisure":"Svago",
+
+  "pilgrimage":"Pellegrinaggio",
+  "discernment":"Discernimento",
+  "fiances":"Fidanzati",
+  "affectivity":"Affettività",
+  "family":"Famiglia",
+  "exercises":"Esercizi",
+  "mission":"Missione",
+  "catechesis":"Catechesi",
+  "religiousVocation":"Vocazione religiosa",
+  "femininity":"Femminilità",
+  "easter":"Pasqua",
+  "commonLife":"Vita comunitaria",
+  "retreat":"Ritiro spirituale",
+
+  "exhibitions":"Mostre",
+  "theater":"Teatro",
+  "cinema":"Cinema",
+  "literature":"Letteratura",
+  "conferences":"Conferenze",
+  "festival":"Festival",
+  "concerts":"Concerti",
+  "socioPolitical":"Socio-Politico",
+
+  "generic":"Generico",
+  "excursion":"Escursione",
+  "kitchen":"Cucina",
+  "sport":"Sport",
+  "picnic":"Pic-nic",
+  "games":"Giochi"
 }

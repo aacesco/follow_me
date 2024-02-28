@@ -1,7 +1,7 @@
+import 'dart:core';
+
 import 'package:flutter/material.dart';
 import 'package:follow_me/utils/enum_helper.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:intl/intl.dart';
 
 import '../constants/app_constants.dart';
 import '../constants/app_enums.dart';
@@ -19,15 +19,18 @@ class InputSelect extends StatefulWidget {
 }
 
 class _InputSelectState extends State<InputSelect> {
-  SpiritualTypes? selectedSpiritualType;
-  CulturalTypes? selectedCulturalType;
-  LeisureTypes? selectedLeisureType;
+  late MapEntry<String, dynamic> selectedValue;
+  late final Map<String, dynamic> values1;
 
   @override
   Widget build(BuildContext context) {
-    widget.controller.text = widget.controller.text.isEmpty
+    String key = widget.controller.text.isEmpty
         ? AppConstants.GENERIC
         : widget.controller.text;
+    String label = EnumHelper.getLocalizedValue(context, key);
+    values1 = retrieveValues1(widget.category);
+    selectedValue = values1.entries.firstWhere((e) => e.key == key);
+    widget.controller.text = key;
 
     return Padding(
         padding: const EdgeInsets.only(bottom: 8.0, top: 8.0),
@@ -39,11 +42,18 @@ class _InputSelectState extends State<InputSelect> {
   }
 
   buildDropdownButton(String category) {
-    final List<String> values = retrieveValues(category);
+    //final List<String> values = retrieveValues(category);
+    int count = values1.entries.where((item) {
+      return item.key == selectedValue.key;
+    }).length;
+    bool presente = count == 1;
+    print("selectedValue: $selectedValue");
+    print("values1: $values1");
+    print("presente: $presente");
 
-    return DropdownButton<String>(
+    return DropdownButton<MapEntry<String, dynamic>>(
       isExpanded: true,
-      value: widget.controller.text,
+      value: selectedValue,
       hint: Text(widget.label),
       icon: const Icon(Icons.arrow_downward),
       elevation: 16,
@@ -51,15 +61,18 @@ class _InputSelectState extends State<InputSelect> {
         height: 1,
         color: Colors.black,
       ),
-      onChanged: (String? value) {
+      onChanged: (MapEntry<String, dynamic>? newValue) {
         setState(() {
-          widget.controller.text = value!;
+          print("selectedValue: $newValue");
+          selectedValue = newValue!;
+          widget.controller.text = newValue.key;
         });
       },
-      items: values.map<DropdownMenuItem<String>>((String value) {
-        return DropdownMenuItem<String>(
-          value: value,
-          child: Text(value),
+      items: values1.entries.map<DropdownMenuItem<MapEntry<String, dynamic>>>(
+          (MapEntry<String, dynamic> entry) {
+        return DropdownMenuItem<MapEntry<String, dynamic>>(
+          value: entry,
+          child: Text(entry.value),
         );
       }).toList(),
     );
@@ -75,6 +88,19 @@ class _InputSelectState extends State<InputSelect> {
         return EnumHelper.getList(LeisureTypes.values);
       default:
         return [];
+    }
+  }
+
+  Map<String, dynamic> retrieveValues1(String category) {
+    switch (category) {
+      case "spiritual":
+        return EnumHelper.getEntries(SpiritualTypes.values, context);
+      case "cultural":
+        return EnumHelper.getEntries(CulturalTypes.values, context);
+      case "leisure":
+        return EnumHelper.getEntries(LeisureTypes.values, context);
+      default:
+        return <String, dynamic>{};
     }
   }
 }

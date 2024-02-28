@@ -12,7 +12,9 @@ class Paragraph extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (content.isBlank!) {
-      return const Padding(padding: EdgeInsets.only(top: 2, bottom: 12));
+      return const SizedBox(
+        height: 0,
+      );
     }
 
     return Padding(
