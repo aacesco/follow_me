@@ -3,10 +3,6 @@
 
   "details": "Details",
 
-  "helloWorld": "Hello World!",
-  "@helloWorld": {
-    "description": "The conventional newborn programmer greeting"
-  },
   "title": "Title",
   "description": "Description",
   "notes": "Notes",
@@ -74,5 +70,10 @@
   "kitchen":"Kitchen",
   "sport":"Sport",
   "picnic":"Picnic",
-  "games":"Games"
+  "games":"Games",
+
+  "hours":"hours",
+
+  "datesButton":"Add/manage dates"
+
 }

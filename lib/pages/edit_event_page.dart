@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:follow_me/components/dates/input_dates.dart';
 import 'package:follow_me/components/input_select.dart';
 import 'package:follow_me/utils/enum_helper.dart';
 import '../components/bottomnavbar.dart';
@@ -101,6 +102,7 @@ class _EditEventPageState extends State<EditEventPage> {
               ),
               InputText(widget.titleCtlr, AppLocalizations.of(context)!.title,
                   mandatory: true),
+              const InputDates(),
               InputText(widget.descriptionCtlr,
                   AppLocalizations.of(context)!.description,
                   mandatory: true),

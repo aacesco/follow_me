@@ -69,5 +69,9 @@
   "kitchen":"Cucina",
   "sport":"Sport",
   "picnic":"Pic-nic",
-  "games":"Giochi"
+  "games":"Giochi",
+
+  "hours":"ore",
+
+  "datesButton":"Aggiungi/gestisci le date"
 }

@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import '../constants/app_constants.dart';
 import '../models/event.dart';
 import '../pages/auth_gate.dart';
+import '../pages/dates_manager.dart';
 import '../pages/edit_event_page.dart';
 import '../pages/event_page.dart';
 
@@ -62,6 +63,10 @@ class AppRoutes {
     GetPage(
       name: NavigationConstants.EDIT_EVENT_PAGE,
       page: () => EditEventPage(Get.arguments['event'], Get.arguments['isNew']),
+    ),
+    GetPage(
+      name: NavigationConstants.DATES_MANAGER,
+      page: () => DatesManager(Get.arguments['eventId']),
     ),
     GetPage(
       name: NavigationConstants.AUTH_GATE,
