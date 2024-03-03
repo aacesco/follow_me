@@ -11,7 +11,18 @@ class FieldsConstants {
   static const String CONTACTS = "Contacts";
   static const String PROMOTER = "Promoter";
   static const String GUIDE = "Guide";
+  static const String WEBSITE = "Link";
+  static const String WHATSAPP = "Whatsapp";
+  static const String TELEGRAM = "Telegram";
+  static const String LIKES = "Likes";
+  static const String TAGS = "Tags";
+  static const String FAVORITE = "Favorite";
+  static const String ATTACHMENTS = "Attachments";
+  static const String LATITUDE = "Latitude";
+  static const String LONGITUDE = "Longitude";
+  static const String RECURRING = "Recurring";
   static const String DATES = "Dates";
+
   static const String INSERT_USER = "InsertUser";
   static const String INSERT_TIME = "InsertTime";
   static const String UPDATE_USER = "UpdateUser";

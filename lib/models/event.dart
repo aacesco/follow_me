@@ -19,15 +19,16 @@ class Event extends Markers {
   String? contacts;
   String? promoter;
   String? guide;
-  String? link;
+  String? website;
+  String? whatsapp;
+  String? telegram;
   int? likes; //parteciperò/ interessato
   List<String>? tags;
-
-  List<String>?
-      favorite; //metterlo nell'anagrafica dell'utente (tab a parte), lista di ID
-  String?
-      attachments; //cloud storage, limite dimensione massima, entità esterna,
+  //metterlo nell'anagrafica dell'utente (tab a parte), lista di ID
+  List<String>? favorite;
+  //cloud storage, limite dimensione massima, entità esterna,
   // creare cartella con id evento o ID come prefisso del file
+  String? attachments;
 
   Event(this.image, this.title, this.description, this.category, this.location,
       super.insertUser, super.insertTime, super.updateUser, super.updateTime);
@@ -65,6 +66,39 @@ class Event extends Markers {
     guide = map.containsKey(FieldsConstants.GUIDE)
         ? document[FieldsConstants.GUIDE]
         : AppConstants.EMPTY;
+    website = map.containsKey(FieldsConstants.WEBSITE)
+        ? document[FieldsConstants.WEBSITE]
+        : AppConstants.EMPTY;
+    whatsapp = map.containsKey(FieldsConstants.WHATSAPP)
+        ? document[FieldsConstants.WHATSAPP]
+        : AppConstants.EMPTY;
+    telegram = map.containsKey(FieldsConstants.TELEGRAM)
+        ? document[FieldsConstants.TELEGRAM]
+        : AppConstants.EMPTY;
+    likes = map.containsKey(FieldsConstants.LIKES)
+        ? document[FieldsConstants.LIKES]
+        : 0;
+    tags = map.containsKey(FieldsConstants.TAGS)
+        ? document[FieldsConstants.TAGS]
+        : [];
+    favorite = map.containsKey(FieldsConstants.FAVORITE)
+        ? document[FieldsConstants.FAVORITE]
+        : [];
+    attachments = map.containsKey(FieldsConstants.ATTACHMENTS)
+        ? document[FieldsConstants.ATTACHMENTS]
+        : AppConstants.EMPTY;
+    latitude = map.containsKey(FieldsConstants.LATITUDE)
+        ? document[FieldsConstants.LATITUDE]
+        : 0.0;
+    longitude = map.containsKey(FieldsConstants.LONGITUDE)
+        ? document[FieldsConstants.LONGITUDE]
+        : 0.0;
+    recurring = map.containsKey(FieldsConstants.RECURRING)
+        ? document[FieldsConstants.RECURRING]
+        : false;
+    /*dates = map.containsKey(FieldsConstants.DATES)
+        ? document[FieldsConstants.DATES]
+        : AppConstants.EMPTY;*/
   }
 
   Map<String, dynamic> toMap() {
@@ -80,10 +114,25 @@ class Event extends Markers {
       FieldsConstants.CONTACTS: contacts,
       FieldsConstants.PROMOTER: promoter,
       FieldsConstants.GUIDE: guide,
+      FieldsConstants.WEBSITE: website,
+      FieldsConstants.WHATSAPP: whatsapp,
+      FieldsConstants.TELEGRAM: telegram,
+      FieldsConstants.LIKES: likes,
+      FieldsConstants.TAGS: tags,
+      FieldsConstants.FAVORITE: favorite,
+      FieldsConstants.ATTACHMENTS: attachments,
+      FieldsConstants.LATITUDE: latitude,
+      FieldsConstants.LONGITUDE: longitude,
+      FieldsConstants.RECURRING: recurring,
       FieldsConstants.INSERT_TIME: insertTime,
       FieldsConstants.INSERT_USER: insertUser,
       FieldsConstants.UPDATE_TIME: updateTime,
       FieldsConstants.UPDATE_USER: updateUser,
+
+      /*FieldsConstants.DATES : dates,
+
+        ? document[FieldsConstants.DATES]
+        : AppConstants.EMPTY;*/
     };
   }
 }

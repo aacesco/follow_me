@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:follow_me/utils/enum_helper.dart';
 import 'package:get/get.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:url_launcher/url_launcher_string.dart';
@@ -7,7 +8,9 @@ class Paragraph extends StatelessWidget {
   final String header;
   final String content;
   final Icon? icon;
-  const Paragraph(this.header, this.content, {super.key, this.icon});
+  final bool? requiresLocalisation;
+  const Paragraph(this.header, this.content,
+      {super.key, this.icon, this.requiresLocalisation});
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +33,9 @@ class Paragraph extends StatelessWidget {
                       color: Color(0x9E575758),
                       fontSize: 15,
                       fontWeight: FontWeight.bold)),
+              if (requiresLocalisation ?? false)
+                Text(EnumHelper.getLocalizedValue(context, content)),
+              if (requiresLocalisation == null || requiresLocalisation == false)
               MarkdownBody(
                   data: content.replaceAll("\\n", "\n"),
                   selectable: true,

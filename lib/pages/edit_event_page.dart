@@ -32,6 +32,10 @@ class EditEventPage extends StatefulWidget {
   final TextEditingController promoterCtlr = TextEditingController();
   final TextEditingController guideCtlr = TextEditingController();
   final TextEditingController websiteCtlr = TextEditingController();
+  final TextEditingController whatsappCtlr = TextEditingController();
+  final TextEditingController telegramCtlr = TextEditingController();
+  final TextEditingController tagsCtlr = TextEditingController();
+  final TextEditingController likesCtlr = TextEditingController();
   final TextEditingController attachmentsCtlr = TextEditingController();
 
   /*
@@ -60,7 +64,7 @@ class _EditEventPageState extends State<EditEventPage> {
       widget.guideCtlr.text = widget.event.guide ?? AppConstants.EMPTY;
       widget.contactsCtlr.text = widget.event.contacts ?? AppConstants.EMPTY;
       widget.promoterCtlr.text = widget.event.promoter ?? AppConstants.EMPTY;
-      widget.websiteCtlr.text = widget.event.link ?? AppConstants.EMPTY;
+      widget.websiteCtlr.text = widget.event.website ?? AppConstants.EMPTY;
       widget.attachmentsCtlr.text =
           widget.event.attachments ?? AppConstants.EMPTY;
     }
@@ -113,6 +117,18 @@ class _EditEventPageState extends State<EditEventPage> {
               InputText(
                   widget.promoterCtlr, AppLocalizations.of(context)!.promoter),
               InputText(widget.guideCtlr, AppLocalizations.of(context)!.guide),
+              InputText(
+                  widget.websiteCtlr, AppLocalizations.of(context)!.website),
+              InputText(
+                  widget.whatsappCtlr, AppLocalizations.of(context)!.whatsapp),
+              InputText(
+                  widget.telegramCtlr, AppLocalizations.of(context)!.telegram),
+              InputText(widget.likesCtlr, AppLocalizations.of(context)!.likes),
+              InputText(widget.tagsCtlr, AppLocalizations.of(context)!.tags),
+              InputText(widget.attachmentsCtlr,
+                  AppLocalizations.of(context)!.attachments),
+              InputText(widget.recurringCtlr,
+                  AppLocalizations.of(context)!.recurring),
             ],
           ),
         ),

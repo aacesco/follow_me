@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class InputText extends StatelessWidget {
   final TextEditingController controller;
@@ -17,21 +18,25 @@ class InputText extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(label),
-              if (mandatory ?? false) Text('obbligatorio'),
+              if (mandatory ?? false)
+                Text(AppLocalizations.of(context)!.mandatory),
             ],
           ),
           const SizedBox(height: 5),
-          TextFormField(
-            controller: controller,
-            decoration: InputDecoration(
-                hintText: label,
-                border: mandatory ?? false
-                    ? const OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.redAccent))
-                    : null),
-            maxLines: null,
-            style: const TextStyle(fontSize: 20),
-            textAlign: TextAlign.left,
+          Container(
+            color: Colors.grey[200],
+            child: TextFormField(
+              controller: controller,
+              decoration: InputDecoration(
+                  hintText: label,
+                  border: mandatory ?? false
+                      ? const OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.redAccent))
+                      : null),
+              maxLines: null,
+              style: const TextStyle(fontSize: 20),
+              textAlign: TextAlign.left,
+            ),
           ),
         ],
       ),
