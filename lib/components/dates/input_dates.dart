@@ -34,7 +34,7 @@ class InputDates extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(buildDateTime()),
+                      Text(datesController.buildDateTime()),
                       Text('2 ${AppLocalizations.of(context)!.hours}')
                     ],
                   ),
@@ -61,10 +61,4 @@ class InputDates extends StatelessWidget {
         ]));
   }
 
-  String buildDateTime() {
-    DateTime currentTime = DateTime.now();
-    DateTime nextHour = DateTime(currentTime.year, currentTime.month,
-        currentTime.day, currentTime.hour + 1);
-    return nextHour.toLocal().toString();
-  }
 }

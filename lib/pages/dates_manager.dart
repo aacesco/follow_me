@@ -1,18 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:follow_me/components/dates/input_dates.dart';
-import 'package:follow_me/components/input_select.dart';
-import 'package:follow_me/utils/enum_helper.dart';
+import 'package:intl/intl.dart';
 import '../components/bottomnavbar.dart';
-import '../components/input_image.dart';
-import '../components/input_text.dart';
-import '../constants/app_constants.dart';
-import '../constants/app_enums.dart';
-import '../constants/navigation_constants.dart';
-import '../controllers/image_picker_controller.dart';
-import '../models/event.dart';
-import '../controllers/events_controller.dart';
+import 'package:datetime_picker_formfield_new/datetime_picker_formfield.dart';
 import 'package:get/get.dart';
+import 'dart:async';
+import 'package:flutter/cupertino.dart';
+
+import '../components/dates/input_date_time_field.dart';
+import '../controllers/dates_controller.dart';
 
 class DatesManager extends StatelessWidget {
   final String eventId;
@@ -25,29 +21,33 @@ class DatesManager extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (eventId.isBlank ?? true) {
+    final DatesController datesController = Get.find();
 
-     // telegramCtlr.text = eventId.telegram ?? AppConstants.EMPTY;
+    if (eventId.isBlank ?? true) {
+      datesController.defaultStart();
+      // telegramCtlr.text = eventId.telegram ?? AppConstants.EMPTY;
       //websiteCtlr.text = eventId.website ?? AppConstants.EMPTY;
     }
 
     return Scaffold(
-        appBar: AppBar(title: Text(AppLocalizations.of(context)!.details)),
+        appBar: AppBar(title: Text(AppLocalizations.of(context)!.datesManager)),
         body: SingleChildScrollView(
           padding: const EdgeInsets.all(10.0),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              InputDatePickerFormField(
-                fieldLabelText: 'Data di inizio',
-                firstDate: DateTime(DateTime.now().year),
-                lastDate: DateTime(DateTime.now().year + 2, 12, 12),
-                initialDate: DateTime.now(),
-                onDateSubmitted: (date) {
-
-                },
+              Form(
+                key: datesController.formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    InputDateTimeField(AppLocalizations.of(context)!.start),
+                    const SizedBox(height: 24),
+                    InputDateTimeField(AppLocalizations.of(context)!.end),
+                  ],
+                ),
               ),
-             /* InputText(descriptionCtlr,
+              /* InputText(descriptionCtlr,
                   AppLocalizations.of(context)!.description,
                   mandatory: true),
               InputText(
@@ -67,7 +67,7 @@ class DatesManager extends StatelessWidget {
 
   Future saveDates() async {
     /*EventsController eventsRepo = Get.find();
-    
+
     eventId.insertTime =
         isNew ? DateTime.now() : eventId.insertTime;
     eventId.insertUser = isNew ? 'Andrea' : eventId.insertUser;
@@ -84,5 +84,55 @@ class DatesManager extends StatelessWidget {
 
     Get.toNamed(NavigationConstants.EVENT_PAGE,
         arguments: {'event': eventsRepo.events[0]});*/
+  }
+}
+
+class IosStylePickers extends StatefulWidget {
+  const IosStylePickers({super.key});
+
+  @override
+  _IosStylePickersState createState() => _IosStylePickersState();
+}
+
+class _IosStylePickersState extends State<IosStylePickers> {
+  final format = DateFormat("yyyy-MM-dd HH:mm");
+  DateTime? value;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(children: <Widget>[
+      Text('iOS style pickers (${format.pattern})'),
+      DateTimeField(
+        initialValue: value,
+        format: format,
+        onShowPicker: (context, currentValue) async {
+          await showCupertinoModalPopup(
+              context: context,
+              builder: (context) {
+                return BottomSheet(
+                  builder: (context) => Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Container(
+                        constraints: BoxConstraints(maxHeight: 200),
+                        child: CupertinoDatePicker(
+                          onDateTimeChanged: (DateTime date) {
+                            value = date;
+                          },
+                        ),
+                      ),
+                      TextButton(
+                          onPressed: () => Navigator.pop(context),
+                          child: Text('Ok')),
+                    ],
+                  ),
+                  onClosing: () {},
+                );
+              });
+          setState(() {});
+          return value;
+        },
+      ),
+    ]);
   }
 }

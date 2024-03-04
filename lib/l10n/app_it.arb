@@ -1,7 +1,11 @@
 {
   "@@locale": "it",
+
+  "pageNames": "###########################################################################",
   "details": "Dettagli",
-  "helloWorld": "Ciao Mondo!",
+  "datesManager": "Gestisci le date",
+
+  "propertyNames": "###########################################################################",
   "title": "Titolo",
   "description": "Descrizione",
   "notes": "Note",
@@ -23,24 +27,27 @@
   "tags": "Tags",
   "latitude": "Latitudine",
   "longitude": "Longitudine",
+  "favorite": "Preferiti",
   "insertTime": "InsertTime",
   "insertUser": "InsertUser",
   "updateTime": "UpdateTime",
   "updateUser": "UpdateUser",
 
+  "categoryNames": "###########################################################################",
   "spiritualEvents": "Spiritualità",
   "culturalEvents": "Cultura",
   "leisureEvents": "Svago",
   "promoters": "Promotori",
   "info": "Info",
-  "favorite": "Preferiti",
-  "all": "Tutto",
-  "mandatory": "Obbligatorio",
-
   "spiritual":"Spirituale",
   "cultural":"Culturale",
   "leisure":"Svago",
 
+  "filterNames": "###########################################################################",
+  "all": "Tutto",
+  "mandatory": "Obbligatorio",
+
+  "spiritualTypeNames": "###########################################################################",
   "pilgrimage":"Pellegrinaggio",
   "discernment":"Discernimento",
   "fiances":"Fidanzati",
@@ -55,6 +62,7 @@
   "commonLife":"Vita comunitaria",
   "retreat":"Ritiro spirituale",
 
+  "culturalTypeNames": "###########################################################################",
   "exhibitions":"Mostre",
   "theater":"Teatro",
   "cinema":"Cinema",
@@ -64,6 +72,7 @@
   "concerts":"Concerti",
   "socioPolitical":"Socio-Politico",
 
+  "leisureTypeNames": "###########################################################################",
   "generic":"Generico",
   "excursion":"Escursione",
   "kitchen":"Cucina",
@@ -71,7 +80,13 @@
   "picnic":"Pic-nic",
   "games":"Giochi",
 
-  "hours":"ore",
+  "buttonNames": "###########################################################################",
+  "datesButton":"Aggiungi/gestisci le date",
 
-  "datesButton":"Aggiungi/gestisci le date"
+  "datetimeNames": "###########################################################################",
+  "hours":"ore",
+  "start":"Inizio",
+  "end":"Fine",
+
+  "genericNames": "###########################################################################"
 }
