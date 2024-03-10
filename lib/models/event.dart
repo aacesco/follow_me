@@ -23,9 +23,9 @@ class Event extends Markers {
   String? whatsapp;
   String? telegram;
   int? likes; //parteciperò/ interessato
-  List<String>? tags;
+  List<dynamic>? tags;
   //metterlo nell'anagrafica dell'utente (tab a parte), lista di ID
-  List<String>? favorite;
+  List<dynamic>? favorite;
   //cloud storage, limite dimensione massima, entità esterna,
   // creare cartella con id evento o ID come prefisso del file
   String? attachments;
@@ -79,11 +79,11 @@ class Event extends Markers {
         ? document[FieldsConstants.LIKES]
         : 0;
     tags = map.containsKey(FieldsConstants.TAGS)
-        ? document[FieldsConstants.TAGS]
-        : [];
+        ? map[FieldsConstants.TAGS].map((dynamic item) => item.toString()).toList()
+        : <String>[];
     favorite = map.containsKey(FieldsConstants.FAVORITE)
-        ? document[FieldsConstants.FAVORITE]
-        : [];
+        ? document[FieldsConstants.FAVORITE].map((dynamic item) => item.toString()).toList()
+        : <String>[];
     attachments = map.containsKey(FieldsConstants.ATTACHMENTS)
         ? document[FieldsConstants.ATTACHMENTS]
         : AppConstants.EMPTY;

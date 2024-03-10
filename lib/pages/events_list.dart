@@ -6,7 +6,7 @@ import 'package:follow_me/models/event.dart';
 import 'package:get/get.dart';
 import '../components/bottomnavbar.dart';
 import '../components/fm_appbar.dart';
-import '../components/fm_tile.dart';
+import '../components/event_tile.dart';
 import '../constants/navigation_constants.dart';
 
 class EventsList extends StatefulWidget {
@@ -61,7 +61,7 @@ class _EventsListState extends State<EventsList> {
                       controller: _scrollController,
                       itemCount: eventsRepo.events.length,
                       itemBuilder: (context, index) {
-                        return FmTile(eventsRepo.events[index]);
+                        return EventTile(eventsRepo.events[index]);
                       }),
                 ),
                 const TempFavorite(),

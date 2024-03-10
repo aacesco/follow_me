@@ -4,16 +4,16 @@ import 'package:get/get.dart';
 import '../models/event.dart';
 import 'cover_image.dart';
 
-class FmTile extends StatefulWidget {
+class EventTile extends StatefulWidget {
   final Event event;
 
-  const FmTile(this.event, {super.key});
+  const EventTile(this.event, {super.key});
 
   @override
-  State<FmTile> createState() => _FmTileState();
+  State<EventTile> createState() => _EventTileState();
 }
 
-class _FmTileState extends State<FmTile> {
+class _EventTileState extends State<EventTile> {
   bool isFavorite = false;
 
   @override

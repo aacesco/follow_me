@@ -6,6 +6,7 @@ import 'package:follow_me/controllers/dates_controller.dart';
 import 'package:get/get.dart';
 
 import '../../constants/navigation_constants.dart';
+import '../date_tile.dart';
 
 class InputDates extends StatelessWidget {
   const InputDates({super.key});
@@ -26,17 +27,45 @@ class InputDates extends StatelessWidget {
           ),
           const SizedBox(height: 5),
           Container(
-            color: Colors.grey[200],
+            decoration: BoxDecoration(
+                color: Colors.grey[200],
+                border: Border.all(
+                  color: Colors.black54, // Border color
+                  width: 1.0, // Border width
+                ),
+                borderRadius: BorderRadius.circular(2)),
             child: Column(
               children: [
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(datesController.buildDateTime()),
-                      Text('2 ${AppLocalizations.of(context)!.hours}')
-                    ],
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        border: Border.all(
+                          color: Colors.white, // Border color
+                          width: 1.0, // Border width
+                        ),
+                        borderRadius: BorderRadius.circular(2)),
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                      Row(
+                        children: [
+                          if(datesController.dates.isNotEmpty)
+                           Obx(
+                            () => ListView.builder(
+                                itemCount: datesController.dates.length,
+                                itemBuilder: (context, index) {
+                                  return DateTile(date: datesController.dates[index]);
+                                }),
+                          ),
+                          if(datesController.dates.isEmpty)
+                            DateTile()
+                        ],
+                      ),
+                      SizedBox(height: 5),
+                      Text("Totale eventi: ${datesController.dates.length}"),
+                    ]),
                   ),
                 ),
                 Padding(
@@ -60,5 +89,4 @@ class InputDates extends StatelessWidget {
           ),
         ]));
   }
-
 }
