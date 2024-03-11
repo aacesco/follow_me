@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../constants/app_constants.dart';
+import '../constants/fields_constants.dart';
 import '../constants/navigation_constants.dart';
 import '../models/date.dart';
 import '../models/event.dart';
@@ -17,11 +18,11 @@ class DatesController extends GetxController {
   RxList<Date> dates = <Date>[].obs;
   RxString dateId = ''.obs;
 
-  final formKey = GlobalKey<FormState>();
+  final GlobalKey formKey = GlobalKey<FormState>();
   late DateTime start;
 
-  CollectionReference eventsCollection =
-  FirebaseFirestore.instance.collection(AppConstants.DATES);
+  CollectionReference datesCollection =
+      FirebaseFirestore.instance.collection(AppConstants.DATES);
 
   String buildDateTime() {
     DateTime currentTime = DateTime.now();
@@ -32,5 +33,33 @@ class DatesController extends GetxController {
 
   void defaultStart() {
     start = DateTime.now();
+  }
+
+  Future getDatesByEventId(String eventId) async {
+    if (eventId.isNotEmpty) {
+      QuerySnapshot results = await datesCollection
+          .where(FieldsConstants.EVENT_ID, isEqualTo: eventId)
+          .orderBy(FieldsConstants.START)
+          .get();
+
+      parseList(results);
+    }
+  }
+
+  Future getDateById(String id) async {
+    DocumentSnapshot document = await datesCollection.doc(id).get();
+
+    Date item = Date.fromQuery(document);
+    dates.clear();
+    dates.add(item);
+  }
+
+  void parseList(QuerySnapshot<Object?> results) {
+    dates.clear();
+
+    for (DocumentSnapshot document in results.docs) {
+      Date item = Date.fromQuery(document);
+      dates.add(item);
+    }
   }
 }

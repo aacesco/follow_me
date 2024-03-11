@@ -23,6 +23,10 @@ class FieldsConstants {
   static const String RECURRING = "Recurring";
   static const String DATES = "Dates";
 
+  static const String START = "Start";
+  static const String END = "End";
+  static const String EVENT_ID = "EventId";
+
   static const String INSERT_USER = "InsertUser";
   static const String INSERT_TIME = "InsertTime";
   static const String UPDATE_USER = "UpdateUser";

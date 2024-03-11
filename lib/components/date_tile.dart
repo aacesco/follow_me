@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:follow_me/constants/navigation_constants.dart';
 import 'package:get/get.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../controllers/dates_controller.dart';
 import '../models/date.dart';
 import '../models/event.dart';
 
@@ -13,18 +14,20 @@ class DateTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    DatesController datesController = Get.find();
+
     return GestureDetector(
         onTap: onTap,
         child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 8),
-            child: Card(
-                shadowColor: const Color(0xFF232222),
-                elevation: 10,
-                color: const Color(0xFFF9F9F9),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8)),
-                child: buildCard(context)
-    )));
+          padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 8),
+          child: Card(
+              shadowColor: const Color(0xFF232222),
+              elevation: 10,
+              color: const Color(0xFFF9F9F9),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8)),
+              child: buildCard(context)),
+        ));
   }
 
   onTap() {
@@ -33,7 +36,7 @@ class DateTile extends StatelessWidget {
   }
 
   buildCard(BuildContext context) {
-    if(date != null){
+    if (date != null) {
       return Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -47,14 +50,11 @@ class DateTile extends StatelessWidget {
               Text("Note: rgehrj vrehuiv veruvvr"),
             ],
           ),
-          IconButton(
-              icon: const Icon(Icons.edit_calendar),
-              onPressed: () {}),
+          IconButton(icon: const Icon(Icons.edit_calendar), onPressed: () {}),
         ],
       );
     } else {
-      return Text("nessuna data");
+      return Text("nessuna data : ");
     }
-
   }
 }

@@ -102,7 +102,7 @@ class _EditEventPageState extends State<EditEventPage> {
               ),
               InputText(widget.titleCtlr, AppLocalizations.of(context)!.title,
                   mandatory: true),
-              const InputDates(),
+              InputDates(widget.event.id),
               InputText(widget.descriptionCtlr,
                   AppLocalizations.of(context)!.description,
                   mandatory: true),
